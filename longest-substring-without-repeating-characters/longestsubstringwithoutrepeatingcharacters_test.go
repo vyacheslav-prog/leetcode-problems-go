@@ -40,3 +40,27 @@ func TestFindsOneItemSubstringForManySameChars(t *testing.T) {
 		t.Errorf("Result must be equals to one for many same chars the string, result: %v", result)
 	}
 }
+
+func TestFindsSubstringForRepeatedChars(t *testing.T) {
+	s := "1ab1ab1ab"
+	result := lengthOfLongestSubstring(s)
+	if result != 3 {
+		t.Errorf("Result must be equals a length for repeated chars, result: %v", result)
+	}
+}
+
+func TestFindsSubstringWhenLongestSubstringIsLast(t *testing.T) {
+	s := "aab"
+	result := lengthOfLongestSubstring(s)
+	if result != 2 {
+		t.Errorf("Result must be 2 for \"%v\", when longest substring is last, result: %v", s, result)
+	}
+}
+
+func TestFindsSubstringWhenFirstCharIsRepeated(t *testing.T) {
+	s := "dvdf"
+	result := lengthOfLongestSubstring(s)
+	if result != 3 {
+		t.Errorf("Result must be 3 for \"%v\", when first char is repeated, result: %v", s, result)
+	}
+}
