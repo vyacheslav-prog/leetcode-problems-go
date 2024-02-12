@@ -4,17 +4,17 @@ func lengthOfLongestSubstring(s string) int {
 	currentSubstringLength := 0
 	maxSubstringLength := 0
 	currentSubstringChars := map[rune]int{}
-	for _, value := range s {
-		if _, alreadyExists := currentSubstringChars[value]; alreadyExists {
-			if maxSubstringLength < currentSubstringLength {
-				maxSubstringLength = currentSubstringLength
+	for valueIndex, value := range s {
+		if currentIndex, alreadyExists := currentSubstringChars[value]; alreadyExists {
+			subSubstringLength := lengthOfLongestSubstring(s[currentIndex+1:])
+			if subSubstringLength > currentSubstringLength {
+				return subSubstringLength
 			}
-			currentSubstringChars = map[rune]int{}
-			currentSubstringLength = 1
+			return currentSubstringLength
 		} else {
 			currentSubstringLength += 1
 		}
-		currentSubstringChars[value] = 1
+		currentSubstringChars[value] = valueIndex
 	}
 	if maxSubstringLength < currentSubstringLength {
 		return currentSubstringLength

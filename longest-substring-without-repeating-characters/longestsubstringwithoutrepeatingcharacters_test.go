@@ -64,3 +64,19 @@ func TestFindsSubstringWhenFirstCharIsRepeated(t *testing.T) {
 		t.Errorf("Result must be 3 for \"%v\", when first char is repeated, result: %v", s, result)
 	}
 }
+
+func TestFindsSubstringWhenLongestIsFirst(t *testing.T) {
+	s := "abcabcbb"
+	result := lengthOfLongestSubstring(s)
+	if result != 3 {
+		t.Errorf("Result must be 3 for \"%v\", when longest on first position, result: %v", s, result)
+	}
+}
+
+func TestFindsSubstringWithTwiceLettersIntoMiddle(t *testing.T) {
+	s := "pwwkew"
+	result := lengthOfLongestSubstring(s)
+	if result != 3 {
+		t.Errorf("Result must be 3 for \"%v\", when substring with twice letters, result: %v", s, result)
+	}
+}
