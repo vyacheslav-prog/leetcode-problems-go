@@ -50,3 +50,12 @@ func TestFindsMedianForEvenMultipleNums(t *testing.T) {
 		t.Errorf("Result must be 2.5 for even %v and %v, first result: %v, second result: %v", nums1, nums2, result1, result2)
 	}
 }
+
+func TestFindsMedianWhenNumsIsNotMonotone(t *testing.T) {
+	nums1 := []int{1,3}
+	nums2 := []int{2,7}
+	result1, result2 := findMedianSortedArrays(nums1, nums2), findMedianSortedArrays(nums2, nums1)
+	if result1 != 2.5 || result1 != result2 {
+		t.Errorf("Result must be 2.5 for %v and %v, first result: %v, second result: %v", nums1, nums2, result1, result2)
+	}
+}
