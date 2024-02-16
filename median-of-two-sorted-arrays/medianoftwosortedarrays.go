@@ -6,50 +6,66 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 
 func findMedianSortedArraysSumLengthComplexity(nums1 []int, nums2 []int) float64 {
 	nums1Length, nums2Length := len(nums1), len(nums2)
-	if nums1Length == 0 {
-		if nums2Length != 0 {
-			return findMedianSortedArraysSumLengthComplexity(nums2, nums1)
-		}
-		return 0
-	} else if nums2Length != 0 {
-		if nums2[0] < nums1[0] {
-			return findMedianSortedArraysSumLengthComplexity(nums2, nums1)
-		}
-	}
-	var medianNums []int
-	var nums1Pointer, nums2Pointer int
-	halfTotalLength := (nums1Length + nums2Length) / 2
-	if (halfTotalLength*2) != (nums1Length + nums2Length) {
+	totalLength := nums1Length + nums2Length
+	var halfTotalLength, nums1Pointer, nums2Pointer int
+	halfTotalLength, isOddTotalLength := totalLength / 2, (totalLength % 2) != 0
+	if isOddTotalLength {
 		halfTotalLength += 1
 	}
 	for totalCounter := 0; totalCounter != halfTotalLength; totalCounter += 1 {
-		if nums1Pointer != nums1Length {
-			if nums2Pointer == nums2Length {
-				nums1Pointer += 1
-			} else if nums1[nums1Pointer] <= nums2[nums2Pointer] {
+		if nums1Pointer != nums1Length && nums2Pointer != nums2Length {
+			if nums1[nums1Pointer] <= nums2[nums2Pointer] {
 				nums1Pointer += 1
 			}
-		}
-		if totalCounter == halfTotalLength {
-			break
-		}
-		if nums2Pointer != nums2Length {
-			if nums1Pointer == nums1Length {
-				nums2Pointer += 1
-			} else if nums2[nums2Pointer] <= nums1[nums1Pointer] {
+			if nums2[nums2Pointer] <= nums2[nums2Pointer] {
 				nums2Pointer += 1
 			}
+		} else if nums1Pointer != nums1Length {
+			nums1Pointer += 1
+		} else if nums2Pointer != nums2Length {
+			nums2Pointer += 1
 		}
 	}
-	medianNumsLength := len(medianNums)
-	if medianNumsLength == 2 {
-		return float64(medianNums[0] + medianNums[1]) / 2
-	} else if medianNumsLength == 1 {
-		return float64(medianNums[0])
+	var firstNum, secondNum int
+	if isOddTotalLength {
+		if nums1Pointer != nums1Length && nums2Pointer != nums2Length {
+			if nums1[nums1Pointer] <= nums2[nums2Pointer] {
+				firstNum = nums1[nums1Pointer]
+				secondNum = nums1[nums1Pointer]
+			} else if nums2[nums2Pointer] <= nums2[nums2Pointer] {
+				firstNum = nums2[nums2Pointer]
+				secondNum = nums2[nums2Pointer]
+			}
+		} else if nums1Pointer != nums1Length {
+			firstNum = nums1[nums1Pointer]
+			secondNum = nums1[nums1Pointer]
+		} else if nums2Pointer != nums2Length {
+			firstNum = nums2[nums2Pointer]
+			secondNum = nums2[nums2Pointer]
+		} else if nums1Pointer != 0 {
+			firstNum = nums1[nums1Pointer-1]
+			secondNum = nums1[nums1Pointer-1]
+		} else if nums2Pointer != 0 {
+			firstNum = nums2[nums2Pointer-1]
+			secondNum = nums2[nums2Pointer-1]
+		}
+	} else {
+		if nums1Pointer != nums1Length && nums2Pointer != nums2Length {
+			firstNum = nums1[nums1Pointer]
+			secondNum = nums2[nums2Pointer]
+		} else if nums1Pointer != nums1Length {
+			firstNum = nums1[nums1Pointer]
+			secondNum = nums1[max(0, nums1Pointer-1)]
+		} else if nums2Pointer != nums2Length {
+			firstNum = nums2[nums2Pointer]
+			secondNum = nums2[max(0, nums2Pointer-1)]
+		} else if nums1Pointer != 0 && nums2Pointer != 0 {
+			firstNum = nums1[nums1Pointer-1]
+			secondNum = nums2[nums2Pointer-1]
+		}
 	}
-	return 0
+	return float64(firstNum+secondNum) / 2
 }
-
 
 func findMedianSortedArraysConstantComplexity(nums1 []int, nums2 []int) float64 {
 	nums1Length, nums2Length := len(nums1), len(nums2)
