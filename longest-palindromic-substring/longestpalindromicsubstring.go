@@ -1,15 +1,16 @@
 package longestpalindromicsubstring
 
+func isPalindrome(s string) bool {
+	return true
+}
+
 func longestPalindrome(s string) string {
-	if len(s) <= 1 {
-		return s
-	}
-	var result string
+	var repeatedChars string
 	for index, char := range s {
-		result = s[0 : index+1]
-		if byte(char) != result[index] {
-			return result
+		if index != 0 && byte(char) != repeatedChars[index-1] {
+			break
 		}
+		repeatedChars = s[:index+1]
 	}
-	return result
+	return repeatedChars
 }

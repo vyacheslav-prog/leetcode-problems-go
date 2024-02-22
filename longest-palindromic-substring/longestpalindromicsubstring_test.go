@@ -40,3 +40,18 @@ func TestFindsLongestRepeatedSubstringWhenHasOtherChar(t *testing.T) {
 		t.Errorf("Result must be longest repeated substring for %v, actual %v", s, result)
 	}
 }
+
+func TestDetectsPalindromeForEmptyString(t *testing.T) {
+	result := isPalindrome("")
+	if result != true {
+		t.Error("Empty string is always palindrome")
+	}
+}
+
+func TestDetectsNoPalindromeForTwoOtherChars(t *testing.T) {
+	s := "qw"
+	result := isPalindrome(s)
+	if result != false {
+		t.Errorf("Two other chars [%v] must detects as palindrome", s)
+	}
+}
