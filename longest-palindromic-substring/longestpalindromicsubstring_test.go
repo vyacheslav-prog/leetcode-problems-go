@@ -48,10 +48,34 @@ func TestDetectsPalindromeForEmptyString(t *testing.T) {
 	}
 }
 
-func TestDetectsNoPalindromeForTwoOtherChars(t *testing.T) {
+func TestDetectsNoPalindromeForTwoDifferentChars(t *testing.T) {
 	s := "qw"
 	result := isPalindrome(s)
 	if result != false {
-		t.Errorf("Two other chars [%v] must detects as palindrome", s)
+		t.Errorf("Two different chars [%v] must no detects as palindrome", s)
+	}
+}
+
+func TestDetectsPalindromeForMirroredOddChars(t *testing.T) {
+	s := "qwq"
+	result := isPalindrome(s)
+	if result != true {
+		t.Errorf("Mirrored odd chard [%v] must defined as palindrome", s)
+	}
+}
+
+func TestDetectsPalindromeForRepeatedEvenChars(t *testing.T) {
+	s := "8888"
+	result := isPalindrome(s)
+	if result != true {
+		t.Errorf("Repeated char for event counts [%v] must defined as palindrome", s)
+	}
+}
+
+func TestDetectsNoPalindromeForDifferentChars(t *testing.T) {
+	s := "1234"
+	result := isPalindrome(s)
+	if result != false {
+		t.Errorf("Different chars [%v] must detects as no palindrome", s)
 	}
 }

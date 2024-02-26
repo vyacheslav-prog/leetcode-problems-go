@@ -1,6 +1,17 @@
 package longestpalindromicsubstring
 
 func isPalindrome(s string) bool {
+	leftPointer, rightPointer := 0, len(s)-1
+	if rightPointer == -1 {
+		return true
+	}
+	for (rightPointer - leftPointer) > 0 {
+		if s[leftPointer] != s[rightPointer] {
+			return false
+		}
+		leftPointer += 1
+		rightPointer -= 1
+	}
 	return true
 }
 
