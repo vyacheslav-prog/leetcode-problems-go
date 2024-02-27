@@ -16,12 +16,12 @@ func isPalindrome(s string) bool {
 }
 
 func longestPalindrome(s string) string {
-	var repeatedChars string
-	for index, char := range s {
-		if index != 0 && byte(char) != repeatedChars[index-1] {
-			break
-		}
-		repeatedChars = s[:index+1]
+	if isPalindrome(s) {
+		return s
 	}
-	return repeatedChars
+	toLeft, toRight := longestPalindrome(s[0:len(s)-1]), longestPalindrome(s[1:len(s)])
+	if len(toLeft) > len(toRight) {
+		return toLeft
+	}
+	return toRight
 }

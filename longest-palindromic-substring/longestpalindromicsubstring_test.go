@@ -79,3 +79,11 @@ func TestDetectsNoPalindromeForDifferentChars(t *testing.T) {
 		t.Errorf("Different chars [%v] must detects as no palindrome", s)
 	}
 }
+
+func TestFindsLongestPalindromeForRepeatedCharWhenFirstIsOther(t *testing.T) {
+	s := "mooo"
+	result := longestPalindrome(s)
+	if result != "ooo" {
+		t.Errorf("Result must be [ooo] for string [%v], actual [%v]", s, result)
+	}
+}
