@@ -87,3 +87,27 @@ func TestFindsLongestPalindromeForRepeatedCharWhenFirstIsOther(t *testing.T) {
 		t.Errorf("Result must be [ooo] for string [%v], actual [%v]", s, result)
 	}
 }
+
+func TestFindsLongestPalindromeForMedianCharsAroundOthers(t *testing.T) {
+	s := "cabad"
+	result := longestPalindrome(s)
+	if result != "aba" {
+		t.Errorf("Result must be [aba] for string [%v] into median palindrome, actual [%v]", s, result)
+	}
+}
+
+func TestFindsLongestAndSecondPalindromeByOrder(t *testing.T) {
+	s := "1oho34ohoho9"
+	result := longestPalindrome(s)
+	if result != "ohoho" {
+		t.Errorf("Result must be [ohoho] for second palindrome [%v], actual [%v]", s, result)
+	}
+}
+
+func TestFindsLongestAndFirstPalindromeByOrder(t *testing.T) {
+	s := "h08080jjg080pyr"
+	result := longestPalindrome(s)
+	if result != "08080" {
+		t.Errorf("Result must be [08080] for first palindrome [%v], actual [%v]", s, result)
+	}
+}
