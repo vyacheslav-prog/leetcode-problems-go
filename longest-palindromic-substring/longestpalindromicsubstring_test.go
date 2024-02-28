@@ -111,3 +111,11 @@ func TestFindsLongestAndFirstPalindromeByOrder(t *testing.T) {
 		t.Errorf("Result must be [08080] for first palindrome [%v], actual [%v]", s, result)
 	}
 }
+
+func TestFindsLongestPalindromeForLongString(t *testing.T) {
+	s := "babaddtattarrattatddetartrateedredividerb"
+	result := longestPalindrome(s)
+	if result != "ddtattarrattatdd" {
+		t.Errorf("Result must be [ddtattarrattatdd] for long string [%v], actual [%v]", s, result)
+	}
+}
