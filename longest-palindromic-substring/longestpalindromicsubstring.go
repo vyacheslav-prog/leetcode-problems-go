@@ -19,9 +19,15 @@ func longestPalindrome(s string) string {
 	if isPalindrome(s) {
 		return s
 	}
-	toLeft, toRight := longestPalindrome(s[0:len(s)-1]), longestPalindrome(s[1:len(s)])
-	if len(toLeft) > len(toRight) {
-		return toLeft
+	var result string
+	for window := len(s); result == ""; window -= 1 {
+		for leftOffset := 0; len(s) != (leftOffset + window - 1); leftOffset += 1 {
+			candidate := s[leftOffset : leftOffset+window]
+			if isPalindrome(candidate) {
+				result = candidate
+				break
+			}
+		}
 	}
-	return toRight
+	return result
 }
