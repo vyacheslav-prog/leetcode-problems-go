@@ -17,3 +17,39 @@ func TestConvertsOneCharString(t *testing.T) {
 		t.Errorf("Result must be [A] for string [%v] with num rows [%v], actual [%v]", s, numRows, result)
 	}
 }
+
+func TestConvertsManyCharsWhenRowIsSingle(t *testing.T) {
+	numRows := 1
+	s := "ABC"
+	result := convert(s, numRows)
+	if result != "ABC" {
+		t.Errorf("Result must be [ABC] for string [%v] when a row is single, actual [%v]", s, result)
+	}
+}
+
+func TestConvertsToTwoRows(t *testing.T) {
+	numRows := 2
+	s := "ABC"
+	result := convert(s, numRows)
+	if result != "ACB" {
+		t.Errorf("Result must be [ACB] for string [%v] when a rows is twice, actual [%v]", s, result)
+	}
+}
+
+func TestConvertsToTwoRowsWhenLengthIsMore(t *testing.T) {
+	numRows := 2
+	s := "ABCDEF"
+	result := convert(s, numRows)
+	if result != "ACEBDF" {
+		t.Errorf("Result must be [ACEBDF] for string [%v] when a rows is twice, actual [%v]", s, result)
+	}
+}
+
+func TestConvertsToThreeRowsWhenLengthIsThree(t *testing.T) {
+	numRows := 3
+	s := "123"
+	result := convert(s, numRows)
+	if result != "123" {
+		t.Errorf("Result must be [123] for string [%v] when a rows is triple, actual [%v]", s, result)
+	}
+}
