@@ -53,3 +53,21 @@ func TestConvertsToThreeRowsWhenLengthIsThree(t *testing.T) {
 		t.Errorf("Result must be [123] for string [%v] when a rows is triple, actual [%v]", s, result)
 	}
 }
+
+func TestConvertsToThreeRowsWhenColumnsIsMore(t *testing.T) {
+	numRows := 3
+	s := "PAYPALISHIRING"
+	result := convert(s, numRows)
+	if result != "PAHNAPLSIIGYIR" {
+		t.Errorf("Result must be [PAHNAPLSIIGYIR] for string [%v] when a columns is more, actual [%v]", s, result)
+	}
+}
+
+func TestConvertsToFourRowsWhenColumnsIsRepeated(t *testing.T) {
+	numRows := 4
+	s := "PAYPALISHIRING"
+	result := convert(s, numRows)
+	if result != "PINALSIGYAHRPI" {
+		t.Errorf("Result must be [PINALSIGYAHRPI] for [%v] when rows is four and columns is repeated, actual [%v]", s, result)
+	}
+}

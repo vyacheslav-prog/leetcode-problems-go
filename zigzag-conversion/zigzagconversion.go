@@ -1,16 +1,19 @@
 package zigzagconversion
 
 func convert(s string, numRows int) string {
-	if numRows < 2 {
-		return s
-	}
 	var result string
-	var offset int
+	var offset, startsRow int
+	periodicOffset := numRows + max(numRows-2, 0)
 	for len(result) != len(s) {
 		result += string(s[offset])
-		offset += numRows
+		if periodicOffset != numRows && startsRow != (numRows-1) {
+			offset += periodicOffset - startsRow - startsRow
+		} else {
+			offset += periodicOffset
+		}
 		if len(s) <= offset {
-			offset = len(s) - (len(s) - len(result))
+			startsRow += 1
+			offset = startsRow
 		}
 	}
 	return result
