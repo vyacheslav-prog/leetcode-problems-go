@@ -72,3 +72,51 @@ func TestReturnsZeroWhenNumberWithOverflow(t *testing.T) {
 		t.Errorf("Result must be [0] when a number reversing for [%v] is overflowed, actual [%v]", x, result)
 	}
 }
+
+func TestReversesPrePositiveOverflowedNumber(t *testing.T) {
+	x := 2147483647
+	result := reverse(x)
+	if result != 7463847412 {
+		t.Errorf("Result must be [7463847412] for pre positive overflowed [%v], actual [%v]", x, result)
+	}
+}
+
+func TestReturnsZeroWhenNumberIsNegativeOverflow(t *testing.T) {
+	x := -2147483649
+	result := reverse(x)
+	if result != 0 {
+		t.Errorf("Result must be [0] when a negative number [%v] is overflowed reversing, actual [%v]", x, result)
+	}
+}
+
+func TestReversesPreNegativeOverflowedNumber(t *testing.T) {
+	x := -2147483648
+	result := reverse(x)
+	if result != -8463847412 {
+		t.Errorf("Result must be [-8463847412] for pre negative overflowed [%v], actual [%v]", x, result)
+	}
+}
+
+func TestReturnsZeroWhenReversingIsOverflowAndStartsFromOne(t *testing.T) {
+	x := 1534236469
+	result := reverse(x)
+	if result != 0 {
+		t.Errorf("Result must be [0] for an overflowed reversing [%v] with [1] on start, actual [%v]", x, result)
+	}
+}
+
+func TestReturnsZeroWhenReversingIsOverflowAndStartsFromOneForNegativeNumber(t *testing.T) {
+	x := -1534236469
+	result := reverse(x)
+	if result != 0 {
+		t.Errorf("Result must be [0] for an negative overflowed reversing [%v] with [1] on start, actual [%v]", x, result)
+	}
+}
+
+func TestReversesPositiveLargeNumberWithZeroIntoMiddle(t *testing.T) {
+	x := 24077
+	result := reverse(x)
+	if result != 77042 {
+		t.Errorf("Result must be [77042] for a positive large number [%v], actual [%v]", x, result)
+	}
+}
