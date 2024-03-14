@@ -128,3 +128,27 @@ func TestReturnsZeroWhenReversingIsOverflowedAndFirstDigitIsOne(t *testing.T) {
 		t.Errorf("Result must be [0] for an overflowed reversing [%v] with one on start, actual [%v]", x, result)
 	}
 }
+
+func TestReversesMaxPositiveNumberWithMinLastDigit(t *testing.T) {
+	x := 1463847412
+	result := reverse(x)
+	if result != 2147483641 {
+		t.Errorf("Result must be [2147483641] for max positive [%v] with min last digit, actual [%v]", x, result)
+	}
+}
+
+func TestReturnsZeroWhenNegativeReversingIsOverflowedAndFirstDigitIsOne(t *testing.T) {
+	x := -1563847412
+	result := reverse(x)
+	if result != 0 {
+		t.Errorf("Result must be [0] for a negative overflowed reversing [%v] with one on start, actual [%v]", x, result)
+	}
+}
+
+func TestReversesMinNegativeNumberWithMinLastDigit(t *testing.T) {
+	x := -1463847412
+	result := reverse(x)
+	if result != -2147483641 {
+		t.Errorf("Result must be [-2147483641] for min negative [%v] with min last digit, actual [%v]", x, result)
+	}
+}
