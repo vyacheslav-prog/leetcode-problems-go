@@ -48,3 +48,19 @@ func TestConvertsWithClampToMaxNumber(t *testing.T) {
 		t.Errorf("String with overflow [%v] must be clamped to [2147483647], actual [%v]", s, result)
 	}
 }
+
+func TestClamsNumberWhenOverThanMin(t *testing.T) {
+	s := "-2147483649"
+	result := myAtoi(s)
+	if result != -2147483648 {
+		t.Errorf("String with overflow [%v] must be clamped to [-2147483648], actual [%v]", s, result)
+	}
+}
+
+func TestIgnoresPositiveSignOnStart(t *testing.T) {
+	s := "+1"
+	result := myAtoi(s)
+	if result != 1 {
+		t.Errorf("Result must ignores a positive sign for [%v] to [1], actual [%v]", s, result)
+	}
+}
