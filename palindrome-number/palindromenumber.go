@@ -1,8 +1,23 @@
 package palindromenumber
 
+const shift = 10
+
 func isPalindrome(x int) bool {
-	if 9 < x && x < 99 {
-		return x/10 == x%10
+	if x < 0 {
+		return false
 	}
-	return 0 <= x
+	decimals := 1
+	for remainder := x / shift; remainder != 0; remainder /= shift {
+		decimals *= shift
+	}
+	for remainder := x; decimals != 0; decimals /= shift * shift {
+		if remainder/decimals != remainder%shift {
+			return false
+		}
+		if decimals/(shift*shift) != 0 {
+			remainder %= decimals
+			remainder /= shift
+		}
+	}
+	return true
 }
