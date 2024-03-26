@@ -30,7 +30,7 @@ func TestPassesForEqualsCharPatternAndString(t *testing.T) {
 func TestDetectsCharPattern(t *testing.T) {
 	p := "a"
 	result := detectNextPattern(p)
-	if result != charPattern {
+	if result.is(pattern{charPattern}) != true {
 		t.Errorf("Result must be [char] for detected pattern [%v], actual is [%v]", p, result)
 	}
 }
@@ -38,7 +38,7 @@ func TestDetectsCharPattern(t *testing.T) {
 func TestDetectsAnyCharPattern(t *testing.T) {
 	p := "."
 	result := detectNextPattern(p)
-	if result != anyCharPattern {
+	if result.is(pattern{anyCharPattern}) != true {
 		t.Errorf("Result must be [anychar] for detected pattern [%v], actual is [%v]", p, result)
 	}
 }
@@ -46,7 +46,7 @@ func TestDetectsAnyCharPattern(t *testing.T) {
 func TestDetectsZeroOrMoreCharPattern(t *testing.T) {
 	p := "a*"
 	result := detectNextPattern(p)
-	if result != zeroOrMoreCharPattern {
+	if result.is(pattern{zeroOrMoreCharPattern}) != true {
 		t.Errorf("Result must be [zeroormorechar] for detected pattern [%v], actual is [%v]", p, result)
 	}
 }
@@ -54,7 +54,31 @@ func TestDetectsZeroOrMoreCharPattern(t *testing.T) {
 func TestDetectsCharPatternForTwoCharString(t *testing.T) {
 	p := "ab"
 	result := detectNextPattern(p)
-	if result != charPattern {
+	if result.is(pattern{charPattern}) != true {
 		t.Errorf("Result must be [char] for detected pattern [%v] with two char, actual is [%v]", p, result)
+	}
+}
+
+func TestDetectsAnyCharPatternPrecendingChar(t *testing.T) {
+	p := ".a"
+	result := detectNextPattern(p)
+	if result.is(pattern{anyCharPattern}) != true {
+		t.Errorf("Result must be [anychar] for an any char pattern [%v] precending a char, actual is [%v]", p, result)
+	}
+}
+
+func TestDetectsZeroOrMoreCharPatternPrecendingChar(t *testing.T) {
+	p := "a*b"
+	result := detectNextPattern(p)
+	if result.is(pattern{zeroOrMoreCharPattern}) != true {
+		t.Errorf("Result must be [zeroormorechar] for pattern [%v] precending a char, actual is [%v]", p, result)
+	}
+}
+
+func TestComparesPrecendingCharForZeroOrMoreCharPattern(t *testing.T) {
+	p, candidate := pattern{zeroOrMoreCharPattern,'a'}, pattern{zeroOrMoreCharPattern,'b'}
+	result := p.is(candidate)
+	if result != false {
+		t.Errorf("Zero or more char pattern [%v] is not equals for [%v], actual is [true]", p, candidate)
 	}
 }

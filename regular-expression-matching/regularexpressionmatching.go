@@ -1,19 +1,32 @@
 package regularexpressionmatching
 
 const (
-	anyCharPattern = "anychar"
-	charPattern = "char"
+	anyCharSymbol        = '.'
+	zeroOrMoreCharSymbol = '*'
+)
+
+const (
+	anyCharPattern        = "anychar"
+	charPattern           = "char"
 	zeroOrMoreCharPattern = "zeroormorechar"
 )
 
-func detectNextPattern(p string) string {
-	if len(p) > 1 {
-		return zeroOrMoreCharPattern
+type pattern struct {
+	name string
+}
+
+func (p *pattern) is(candidate pattern) bool {
+	return true
+}
+
+func detectNextPattern(p string) pattern {
+	if 1 < len(p) && zeroOrMoreCharSymbol == p[1] {
+		return pattern{zeroOrMoreCharPattern}
 	}
-	if p == "." {
-		return anyCharPattern
+	if anyCharSymbol == p[0] {
+		return pattern{anyCharPattern}
 	}
-	return "char"
+	return pattern{charPattern}
 }
 
 func isMatch(s string, p string) bool {
