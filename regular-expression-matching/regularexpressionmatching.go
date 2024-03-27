@@ -12,21 +12,30 @@ const (
 )
 
 type pattern struct {
-	name string
+	name                    string
+	zeroOrMorePrecedingChar byte
 }
 
 func (p *pattern) is(candidate pattern) bool {
-	return true
+	return p.zeroOrMorePrecedingChar == candidate.zeroOrMorePrecedingChar
+}
+
+func newPattern(name string) pattern {
+	return pattern{name, 0}
+}
+
+func newZeroOrMorePattern(precedingChar byte) pattern {
+	return pattern{zeroOrMoreCharPattern, precedingChar}
 }
 
 func detectNextPattern(p string) pattern {
 	if 1 < len(p) && zeroOrMoreCharSymbol == p[1] {
-		return pattern{zeroOrMoreCharPattern}
+		return newPattern(zeroOrMoreCharPattern)
 	}
 	if anyCharSymbol == p[0] {
-		return pattern{anyCharPattern}
+		return newPattern(anyCharPattern)
 	}
-	return pattern{charPattern}
+	return newPattern(charPattern)
 }
 
 func isMatch(s string, p string) bool {
