@@ -82,3 +82,18 @@ func TestComparesPrecendingCharForZeroOrMoreCharPattern(t *testing.T) {
 		t.Errorf("Zero or more char pattern [%v] is not equals for [%v], actual is [true]", p, candidate)
 	}
 }
+
+func TestParsesEmptyStringPattern(t *testing.T) {
+	result := parseStringPattern("")
+	if len(result) != 0 {
+		t.Errorf("Result must be empty list for an empty string pattern, actual length is [%v]", len(result))
+	}
+}
+
+func TestParsesSinglePatternString(t *testing.T) {
+	p := "a"
+	result := parseStringPattern("")
+	if len(result) != 1 || result[0].is(newPattern(charPattern)) != true {
+		t.Errorf("Result must have [char] pattern for string [%v], actual is [%v]", p, result)
+	}
+}

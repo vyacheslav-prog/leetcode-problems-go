@@ -38,6 +38,10 @@ func detectNextPattern(p string) pattern {
 	return newPattern(charPattern)
 }
 
+func parseStringPattern(p string) []pattern {
+	return []pattern{}
+}
+
 func isMatch(s string, p string) bool {
 	return p == s
 }
