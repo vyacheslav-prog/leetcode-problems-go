@@ -92,8 +92,24 @@ func TestParsesEmptyStringPattern(t *testing.T) {
 
 func TestParsesSinglePatternString(t *testing.T) {
 	p := "a"
-	result := parseStringPattern("")
+	result := parseStringPattern(p)
 	if len(result) != 1 || result[0].is(newPattern(charPattern)) != true {
 		t.Errorf("Result must have [char] pattern for string [%v], actual is [%v]", p, result)
+	}
+}
+
+func TestParsesPatternWithSingleAnyChar(t *testing.T) {
+	p := "."
+	result := parseStringPattern(p)
+	if len(result) != 1 || result[0].is(newPattern(anyCharPattern)) != true {
+		t.Errorf("Result must have [anychar] pattern for string [%v], actual is [%v]", p, result)
+	}
+}
+
+func TestParsesTwoPatternsFromString(t *testing.T) {
+	p := "aa"
+	result := parseStringPattern(p)
+	if len(result) != 2 || result[0].is(newPattern(charPattern)) != true || result[1].is(newPattern(charPattern)) != true {
+		t.Errorf("Result must have two [char] pattern for [%v], actual is [%v]", p, result)
 	}
 }

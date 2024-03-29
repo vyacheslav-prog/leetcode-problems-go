@@ -39,6 +39,9 @@ func detectNextPattern(p string) pattern {
 }
 
 func parseStringPattern(p string) []pattern {
+	if "" != p {
+		return []pattern{detectNextPattern(p)}
+	}
 	return []pattern{}
 }
 
