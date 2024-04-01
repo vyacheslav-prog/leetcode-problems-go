@@ -30,8 +30,8 @@ func TestPassesForEqualsCharPatternAndString(t *testing.T) {
 func TestDetectsCharPattern(t *testing.T) {
 	p := "a"
 	result := detectNextPattern(p)
-	if result.is(newPattern(charPattern)) != true {
-		t.Errorf("Result must be [char] for detected pattern [%v], actual is [%v]", p, result)
+	if expected := newCharPattern('a'); result.is(expected) != true {
+		t.Errorf("Result must be [%v] for detected pattern [%v], actual is [%v]", expected, p, result)
 	}
 }
 
@@ -46,16 +46,16 @@ func TestDetectsAnyCharPattern(t *testing.T) {
 func TestDetectsZeroOrMoreCharPattern(t *testing.T) {
 	p := "a*"
 	result := detectNextPattern(p)
-	if result.is(newPattern(zeroOrMoreCharPattern)) != true {
-		t.Errorf("Result must be [zeroormorechar] for detected pattern [%v], actual is [%v]", p, result)
+	if expected := newZeroOrMorePattern('a'); result.is(expected) != true {
+		t.Errorf("Result must be [%v] for detected pattern [%v], actual is [%v]", expected, p, result)
 	}
 }
 
 func TestDetectsCharPatternForTwoCharString(t *testing.T) {
 	p := "ab"
 	result := detectNextPattern(p)
-	if result.is(newPattern(charPattern)) != true {
-		t.Errorf("Result must be [char] for detected pattern [%v] with two char, actual is [%v]", p, result)
+	if expected := newCharPattern('a'); result.is(expected) != true {
+		t.Errorf("Result must be [%v] for detected pattern [%v] with two char, actual is [%v]", expected, p, result)
 	}
 }
 
@@ -70,8 +70,8 @@ func TestDetectsAnyCharPatternPrecendingChar(t *testing.T) {
 func TestDetectsZeroOrMoreCharPatternPrecendingChar(t *testing.T) {
 	p := "a*b"
 	result := detectNextPattern(p)
-	if result.is(newPattern(zeroOrMoreCharPattern)) != true {
-		t.Errorf("Result must be [zeroormorechar] for pattern [%v] precending a char, actual is [%v]", p, result)
+	if expected := newZeroOrMorePattern('a'); result.is(expected) != true {
+		t.Errorf("Result must be [%v] for pattern [%v] precending a char, actual is [%v]", expected, p, result)
 	}
 }
 
@@ -93,8 +93,8 @@ func TestParsesEmptyStringPattern(t *testing.T) {
 func TestParsesSinglePatternString(t *testing.T) {
 	p := "a"
 	result := parseStringPattern(p)
-	if len(result) != 1 || result[0].is(newPattern(charPattern)) != true {
-		t.Errorf("Result must have [char] pattern for string [%v], actual is [%v]", p, result)
+	if expected := newCharPattern('a'); len(result) != 1 || result[0].is(expected) != true {
+		t.Errorf("Result must have [%v] pattern for string [%v], actual is [%v]", expected, p, result)
 	}
 }
 
@@ -106,10 +106,18 @@ func TestParsesPatternWithSingleAnyChar(t *testing.T) {
 	}
 }
 
-func TestParsesTwoPatternsFromString(t *testing.T) {
+func TestParsesTwoCharPatternsFromString(t *testing.T) {
 	p := "aa"
 	result := parseStringPattern(p)
-	if len(result) != 2 || result[0].is(newPattern(charPattern)) != true || result[1].is(newPattern(charPattern)) != true {
-		t.Errorf("Result must have two [char] pattern for [%v], actual is [%v]", p, result)
+	if expected := newCharPattern('a'); len(result) != 2 || result[0].is(expected) != true || result[1].is(expected) != true {
+		t.Errorf("Result must have two [%v] pattern for [%v], actual is [%v]", expected, p, result)
+	}
+}
+
+func TestParsesCharAndZeroOrMoreCharPatternFromString(t *testing.T) {
+	p := "a*b"
+	result := parseStringPattern(p)
+	if expected := []pattern{newZeroOrMorePattern('a'), newCharPattern('b')}; 2 != len(result) || result[0].is(expected[0]) != true || result[1].is(expected[1]) != true {
+		t.Errorf("Result must be [%v] for pattern string [%v], actual is [%v]", expected, p, result)
 	}
 }
