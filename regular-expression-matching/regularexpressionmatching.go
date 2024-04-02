@@ -8,6 +8,7 @@ const (
 const (
 	anyCharPattern        = "anychar"
 	charPattern           = "char"
+	endPattern            = "endpattern"
 	zeroOrMoreCharPattern = "zeroormorechar"
 )
 
@@ -33,6 +34,9 @@ func newZeroOrMorePattern(precedingChar byte) pattern {
 }
 
 func detectNextPattern(p string) pattern {
+	if 0 == len(p) {
+		return newPattern(endPattern)
+	}
 	if 1 < len(p) && zeroOrMoreCharSymbol == p[1] {
 		return newZeroOrMorePattern(p[0])
 	}
@@ -43,13 +47,17 @@ func detectNextPattern(p string) pattern {
 }
 
 func parseStringPattern(p string) []pattern {
-	if 2 == len(p) {
-		return []pattern{detectNextPattern(p[:1]), detectNextPattern(p[1:])}
+	nextPattern := detectNextPattern(p)
+	if endPattern == nextPattern.name {
+		return []pattern{}
 	}
-	if "" != p {
-		return []pattern{detectNextPattern(p)}
+	result := []pattern{nextPattern}
+	if zeroOrMoreCharPattern == nextPattern.name {
+		result = append(result, parseStringPattern(p[2:])...)
+	} else if anyCharPattern == nextPattern.name || charPattern == nextPattern.name {
+		result = append(result, parseStringPattern(p[1:])...)
 	}
-	return []pattern{}
+	return result
 }
 
 func isMatch(s string, p string) bool {
