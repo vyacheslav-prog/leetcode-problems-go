@@ -13,6 +13,7 @@ const (
 )
 
 type pattern struct {
+	length                  int
 	name                    string
 	zeroOrMorePrecedingChar byte
 }
@@ -21,43 +22,41 @@ func (p *pattern) is(candidate pattern) bool {
 	return p.zeroOrMorePrecedingChar == candidate.zeroOrMorePrecedingChar
 }
 
-func newCharPattern(char byte) pattern {
-	return pattern{charPattern, char}
+func newAnyCharPattern() pattern {
+	return pattern{1, anyCharPattern, 0}
 }
 
-func newPattern(name string) pattern {
-	return pattern{name, 0}
+func newCharPattern(char byte) pattern {
+	return pattern{1, charPattern, char}
 }
 
 func newZeroOrMorePattern(precedingChar byte) pattern {
-	return pattern{zeroOrMoreCharPattern, precedingChar}
+	return pattern{2, zeroOrMoreCharPattern, precedingChar}
 }
 
 func detectNextPattern(p string) pattern {
 	if 0 == len(p) {
-		return newPattern(endPattern)
+		return pattern{0, endPattern, 0}
 	}
 	if 1 < len(p) && zeroOrMoreCharSymbol == p[1] {
 		return newZeroOrMorePattern(p[0])
 	}
 	if anyCharSymbol == p[0] {
-		return newPattern(anyCharPattern)
+		return newAnyCharPattern()
 	}
 	return newCharPattern(p[0])
 }
 
+func matchCharPattern(c byte, s string) (int, bool) {
+	return 0, true
+}
+
 func parseStringPattern(p string) []pattern {
 	nextPattern := detectNextPattern(p)
-	if endPattern == nextPattern.name {
+	if 0 == nextPattern.length {
 		return []pattern{}
 	}
-	result := []pattern{nextPattern}
-	if zeroOrMoreCharPattern == nextPattern.name {
-		result = append(result, parseStringPattern(p[2:])...)
-	} else if anyCharPattern == nextPattern.name || charPattern == nextPattern.name {
-		result = append(result, parseStringPattern(p[1:])...)
-	}
-	return result
+	return append([]pattern{nextPattern}, parseStringPattern(p[nextPattern.length:])...)
 }
 
 func isMatch(s string, p string) bool {
