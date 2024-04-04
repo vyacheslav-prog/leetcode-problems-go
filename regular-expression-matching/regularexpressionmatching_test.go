@@ -126,6 +126,31 @@ func TestMismatchesCharPatternForEmptyString(t *testing.T) {
 	var c byte = 'a'
 	_, result := matchCharPattern(c, "")
 	if result != false {
-		t.Errorf("Empty string is not matches a char [%v], actual is [%v]", c, result)
+		t.Errorf("Empty string must not matches [false] a char [%v], actual is [%v]", c, result)
+	}
+}
+
+func TestMatchesCharPatternWithEqualsSingleCharString(t *testing.T) {
+	var c byte = 'a'
+	s := "a"
+	length, result := matchCharPattern(c, s)
+	if result != true || length != 1 {
+		t.Errorf("Result must be [true] for match [%v] into string [%v], actual is [%v] and [%v]", c, s, length, result)
+	}
+}
+
+func TestMismatchesCharPatternForAnotherCharIntoString(t *testing.T) {
+	var c byte = 'b'
+	s := "c"
+	_, result := matchCharPattern(c, s)
+	if result != false {
+		t.Errorf("Result must be [false] for char [%v] for string [%v], actual is [%v]", c, s, result)
+	}
+}
+
+func TestMismatchesAnyCharPatternForEmptyString(t *testing.T) {
+	_, result := matchAnyCharPattern("")
+	if result != false {
+		t.Errorf("Result must be [false] for match any char pattern for empty string, actual is [%v]", result)
 	}
 }

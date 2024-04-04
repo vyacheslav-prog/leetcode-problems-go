@@ -47,8 +47,15 @@ func detectNextPattern(p string) pattern {
 	return newCharPattern(p[0])
 }
 
+func matchAnyCharPattern(s string) (int, bool) {
+	return 1, true
+}
+
 func matchCharPattern(c byte, s string) (int, bool) {
-	return 0, true
+	if 0 != len(s) && c == s[0] {
+		return 1, true
+	}
+	return 0, false
 }
 
 func parseStringPattern(p string) []pattern {
