@@ -154,3 +154,55 @@ func TestMismatchesAnyCharPatternForEmptyString(t *testing.T) {
 		t.Errorf("Result must be [false] for match any char pattern for empty string, actual is [%v]", result)
 	}
 }
+
+func TestMatchesAnyCharPatternForNotEmptyString(t *testing.T) {
+	s := "a"
+	length, result := matchAnyCharPattern(s)
+	if result != true || length != 1 {
+		t.Errorf("Result must be [1] and [true] for any char pattern for string [%v], actual is [%v] and [%v]", s, length, result)
+	}
+}
+
+func TestMatchesZeroOrMoreCharPatternForEmptyString(t *testing.T) {
+	var c byte = 'a'
+	length, result := matchZeroOrMoreCharPattern(c, "")
+	if result != true || length != 0 {
+		t.Errorf("Result must be [0] and [true] for zero or more char [%v] pattern empty string, actual is [%v] and [%v]", c, length, result)
+	}
+}
+
+func TestMatchesZeroOrMoreCharPatternForSuitableSingleCharString(t *testing.T) {
+	var c byte = 'a'
+	s := "a"
+	length, result := matchZeroOrMoreCharPattern(c, s)
+	if result != true || length != 1 {
+		t.Errorf("Result must be [1] and [true] for zero or more [%v] for string [%s], actual is [%v] and [%v]", c, s, length, result)
+	}
+}
+
+func TestMatchesZeroOrMoreCharPatternForNotSuitableSingleCharString(t *testing.T) {
+	var c byte = 'a'
+	s := "b"
+	length, result := matchZeroOrMoreCharPattern(c, s)
+	if result != true || length != 0 {
+		t.Errorf("Result must be [0] and [true] for zero or more [%v] for string [%s], actual is [%v] and [%v]", c, s, length, result)
+	}
+}
+
+func TestMatchesZeroOrMoreCharPatternForRepeatedSuitableChars(t *testing.T) {
+	var c byte = 'a'
+	s := "aa"
+	length, result := matchZeroOrMoreCharPattern(c, s)
+	if result != true || length != 2 {
+		t.Errorf("Result must be [2] and [true] for zero or more [%v] for string [%s], actual is [%v] and [%v]", c, s, length, result)
+	}
+}
+
+func TestMatchesZeroOrMoreCharPatternForNotOnlyRepeatedAndSuitableChars(t *testing.T) {
+	var c byte = 'a'
+	s := "aab"
+	length, result := matchZeroOrMoreCharPattern(c, s)
+	if result != true || length != 2 {
+		t.Errorf("Result must be [2] and [true] for zero or more [%v] for string [%s], actual is [%v] and [%v]", c, s, length, result)
+	}
+}
