@@ -22,6 +22,18 @@ func (p *pattern) is(candidate pattern) bool {
 	return p.zeroOrMorePrecedingChar == candidate.zeroOrMorePrecedingChar
 }
 
+func (p *pattern) match(s string) (int, bool) {
+	switch p.name {
+	case anyCharPattern:
+		return matchAnyCharPattern(s)
+	case charPattern:
+		return matchCharPattern(p.zeroOrMorePrecedingChar, s)
+	case zeroOrMoreCharPattern:
+		return matchZeroOrMoreCharPattern(p.zeroOrMorePrecedingChar, s)
+	}
+	return 0, false
+}
+
 func newAnyCharPattern() pattern {
 	return pattern{1, anyCharPattern, 0}
 }
@@ -59,10 +71,11 @@ func matchCharPattern(c byte, s string) (int, bool) {
 }
 
 func matchZeroOrMoreCharPattern(c byte, s string) (int, bool) {
-	if 0 != len(s) && c == s[0] {
-		return len(s), true
+	var length int
+	for index := 0; index != len(s) && c == s[index]; index += 1 {
+		length += 1
 	}
-	return 0, true
+	return length, true
 }
 
 func parseStringPattern(p string) []pattern {
@@ -74,5 +87,10 @@ func parseStringPattern(p string) []pattern {
 }
 
 func isMatch(s string, p string) bool {
+	patterns := parseStringPattern(p)
+	if 1 == len(patterns) {
+		_, result := patterns[0].match(s)
+		return result
+	}
 	return p == s
 }

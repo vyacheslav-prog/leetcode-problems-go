@@ -206,3 +206,27 @@ func TestMatchesZeroOrMoreCharPatternForNotOnlyRepeatedAndSuitableChars(t *testi
 		t.Errorf("Result must be [2] and [true] for zero or more [%v] for string [%s], actual is [%v] and [%v]", c, s, length, result)
 	}
 }
+
+func TestPassesAnyCharPatternForSingleCharString(t *testing.T) {
+	s, p := "a", "."
+	result := isMatch(s, p)
+	if result != true {
+		t.Errorf("Result must be [true] for string [%v] and any char pattern [%v], actual is [%v]", s, p, result)
+	}
+}
+
+func TestPassesZeroOrMoreCharPatternForEmptyString(t *testing.T) {
+	p := "a*"
+	result := isMatch("", p)
+	if result != true {
+		t.Errorf("Result must be [true] for empty string for zero or more char pattern [%v], actual is [%v]", p, result)
+	}
+}
+
+func TestPassesTwoAnyCharPatternForTwoAnyCharString(t *testing.T) {
+	s, p := "ab", ".."
+	result := isMatch(s, p)
+	if result != true {
+		t.Errorf("Result must be [true] for two char [%v] and twice any char pattern [%v], actual is [%v]", s, p, result)
+	}
+}
