@@ -87,9 +87,8 @@ func parseStringPattern(p string) []pattern {
 }
 
 func isMatch(s string, p string) bool {
-	patterns := parseStringPattern(p)
-	if 1 == len(patterns) {
-		_, result := patterns[0].match(s)
+	for _, pattern := range parseStringPattern(p) {
+		_, result := pattern.match(s)
 		return result
 	}
 	return p == s

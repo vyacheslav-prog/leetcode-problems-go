@@ -230,3 +230,11 @@ func TestPassesTwoAnyCharPatternForTwoAnyCharString(t *testing.T) {
 		t.Errorf("Result must be [true] for two char [%v] and twice any char pattern [%v], actual is [%v]", s, p, result)
 	}
 }
+
+func TestRejectsAnyCharAndCharPatternsForTwoDifferentChars(t *testing.T) {
+	s, p := "ab", ".c"
+	result := isMatch(s, p)
+	if result != false {
+		t.Errorf("Result must be [false] for two char [%v] and an any char and char pattern [%v], actual is [%v]", s, p, result)
+	}
+}
