@@ -238,3 +238,20 @@ func TestRejectsAnyCharAndCharPatternsForTwoDifferentChars(t *testing.T) {
 		t.Errorf("Result must be [false] for two char [%v] and an any char and char pattern [%v], actual is [%v]", s, p, result)
 	}
 }
+
+func TestPassesRepeatedZeroOrManyCharsWithEndingToCharPattern(t *testing.T) {
+	s, p := "aaab", "a*b"
+	result := isMatch(s, p)
+	if result != true {
+		t.Errorf("Result must be [true] for chars [%v] and pattern [%v], actual is [%v]", s, p, result)
+	}
+}
+
+func TestMatchesZeroOrMoreCharPatternForTwoOtherCharWithAnyToken(t *testing.T) {
+	var c byte = '.'
+	s := "ab"
+	length, result := matchZeroOrMoreCharPattern(c, s)
+	if result != true || length != 2 {
+		t.Errorf("Result must be [true] and [2] for a zero or more any char into [%v], actual is [%v] and [%v]", s, result, length)
+	}
+}
