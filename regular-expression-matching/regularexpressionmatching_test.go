@@ -29,7 +29,7 @@ func TestPassesForEqualsCharPatternAndString(t *testing.T) {
 
 func TestDetectsCharPattern(t *testing.T) {
 	p := "a"
-	result := detectNextPattern(p)
+	_, result := detectNextPattern(p)
 	if expected := newCharPattern('a'); result.is(expected) != true {
 		t.Errorf("Result must be [%v] for detected pattern [%v], actual is [%v]", expected, p, result)
 	}
@@ -37,7 +37,7 @@ func TestDetectsCharPattern(t *testing.T) {
 
 func TestDetectsAnyCharPattern(t *testing.T) {
 	p := "."
-	result := detectNextPattern(p)
+	_, result := detectNextPattern(p)
 	if result.is(newAnyCharPattern()) != true {
 		t.Errorf("Result must be [anychar] for detected pattern [%v], actual is [%v]", p, result)
 	}
@@ -45,7 +45,7 @@ func TestDetectsAnyCharPattern(t *testing.T) {
 
 func TestDetectsZeroOrMoreCharPattern(t *testing.T) {
 	p := "a*"
-	result := detectNextPattern(p)
+	_, result := detectNextPattern(p)
 	if expected := newZeroOrMorePattern('a'); result.is(expected) != true {
 		t.Errorf("Result must be [%v] for detected pattern [%v], actual is [%v]", expected, p, result)
 	}
@@ -53,7 +53,7 @@ func TestDetectsZeroOrMoreCharPattern(t *testing.T) {
 
 func TestDetectsCharPatternForTwoCharString(t *testing.T) {
 	p := "ab"
-	result := detectNextPattern(p)
+	_, result := detectNextPattern(p)
 	if expected := newCharPattern('a'); result.is(expected) != true {
 		t.Errorf("Result must be [%v] for detected pattern [%v] with two char, actual is [%v]", expected, p, result)
 	}
@@ -61,7 +61,7 @@ func TestDetectsCharPatternForTwoCharString(t *testing.T) {
 
 func TestDetectsAnyCharPatternPrecendingChar(t *testing.T) {
 	p := ".a"
-	result := detectNextPattern(p)
+	_, result := detectNextPattern(p)
 	if result.is(newAnyCharPattern()) != true {
 		t.Errorf("Result must be [anychar] for an any char pattern [%v] precending a char, actual is [%v]", p, result)
 	}
@@ -69,7 +69,7 @@ func TestDetectsAnyCharPatternPrecendingChar(t *testing.T) {
 
 func TestDetectsZeroOrMoreCharPatternPrecendingChar(t *testing.T) {
 	p := "a*b"
-	result := detectNextPattern(p)
+	_, result := detectNextPattern(p)
 	if expected := newZeroOrMorePattern('a'); result.is(expected) != true {
 		t.Errorf("Result must be [%v] for pattern [%v] precending a char, actual is [%v]", expected, p, result)
 	}
