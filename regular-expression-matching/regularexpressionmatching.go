@@ -17,10 +17,6 @@ type pattern struct {
 	zeroOrMorePrecedingChar byte
 }
 
-func (p *pattern) is(candidate pattern) bool {
-	return p.zeroOrMorePrecedingChar == candidate.zeroOrMorePrecedingChar
-}
-
 func (p *pattern) match(s string) (int, bool) {
 	switch p.name {
 	case anyCharPattern:
