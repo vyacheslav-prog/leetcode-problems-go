@@ -6,58 +6,100 @@ const (
 )
 
 const (
-	anyCharPattern        = "anychar"
-	charPattern           = "char"
-	endPattern            = "endpattern"
-	zeroOrMoreCharPattern = "zeroormorechar"
+	anyCharPatternName        = "anychar"
+	charPatternName           = "char"
+	endPatternName            = "endpattern"
+	zeroOrMoreCharPatternName = "zeroormorechar"
 )
+
+type patternInterface interface {
+	match(string) (int, bool)
+}
 
 type pattern struct {
 	name                    string
 	zeroOrMorePrecedingChar byte
 }
 
-func (p *pattern) match(s string) (int, bool) {
+type anyCharPattern struct{}
+
+func (p anyCharPattern) match(s string) (int, bool) {
+	return 1, len(s) != 0
+}
+
+type charPattern struct {
+	precedingChar byte
+}
+
+func (p charPattern) match(s string) (int, bool) {
+	if 0 != len(s) && p.precedingChar == s[0] {
+		return 1, true
+	}
+	return 0, false
+}
+
+type endPattern struct{}
+
+func (p endPattern) match(s string) (int, bool) {
+	return 0, len(s) == 0
+}
+
+type zeroOrMoreCharPattern struct {
+	zeroOrMorePrecedingChar byte
+}
+
+func (p zeroOrMoreCharPattern) match(s string) (int, bool) {
+	if anyCharSymbol == p.zeroOrMorePrecedingChar {
+		return len(s), true
+	}
+	var length int
+	for length != len(s) && s[length] == p.zeroOrMorePrecedingChar {
+		length += 1
+	}
+	return length, true
+}
+
+func (p pattern) match(s string) (int, bool) {
 	switch p.name {
-	case anyCharPattern:
+	case anyCharPatternName:
 		return matchAnyCharPattern(s)
-	case charPattern:
+	case charPatternName:
 		return matchCharPattern(p.zeroOrMorePrecedingChar, s)
-	case endPattern:
+	case endPatternName:
 		return matchEndPattern(s)
-	case zeroOrMoreCharPattern:
+	case zeroOrMoreCharPatternName:
 		return matchZeroOrMoreCharPattern(p.zeroOrMorePrecedingChar, s)
 	}
 	return 0, false
 }
 
 func newAnyCharPattern() pattern {
-	return pattern{anyCharPattern, 0}
+	return pattern{anyCharPatternName, 0}
 }
 
 func newCharPattern(char byte) pattern {
-	return pattern{charPattern, char}
+	return pattern{charPatternName, char}
 }
 
 func newEndPattern() pattern {
-	return pattern{endPattern, 0}
+	return pattern{endPatternName, 0}
 }
 
 func newZeroOrMorePattern(precedingChar byte) pattern {
-	return pattern{zeroOrMoreCharPattern, precedingChar}
+	return pattern{zeroOrMoreCharPatternName, precedingChar}
 }
 
-func detectNextPattern(p string) (int, pattern) {
+func detectNextPattern(p string) (int, patternInterface) {
 	if 0 == len(p) {
-		return 0, newEndPattern()
+		return 0, endPattern{}
 	}
 	if 1 < len(p) && zeroOrMoreCharSymbol == p[1] {
-		return 2, newZeroOrMorePattern(p[0])
+		return 2, zeroOrMoreCharPattern{p[0]}
 	}
 	if anyCharSymbol == p[0] {
-		return 1, newAnyCharPattern()
+		return 1, anyCharPattern{}
 	}
-	return 1, newCharPattern(p[0])
+	return 1, charPattern{p[0]}
 }
 
 func matchAnyCharPattern(s string) (int, bool) {
@@ -86,17 +128,16 @@ func matchZeroOrMoreCharPattern(c byte, s string) (int, bool) {
 	return length, true
 }
 
-func parseStringPattern(p string) []pattern {
-	length, nextPattern := detectNextPattern(p)
-	if endPattern == nextPattern.name {
-		return []pattern{}
+func parseStringPattern(p string) []patternInterface {
+	if length, nextPattern := detectNextPattern(p); length != 0 {
+		return append([]patternInterface{nextPattern}, parseStringPattern(p[length:])...)
 	}
-	return append([]pattern{nextPattern}, parseStringPattern(p[length:])...)
+	return []patternInterface{}
 }
 
 func isMatch(s string, p string) bool {
 	var result bool
-	for _, pattern := range append(parseStringPattern(p), newEndPattern()) {
+	for _, pattern := range append(parseStringPattern(p), endPattern{}) {
 		capturedLength, isMatched := pattern.match(s)
 		result = isMatched
 		if result != true {
