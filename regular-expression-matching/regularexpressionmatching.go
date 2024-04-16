@@ -32,14 +32,19 @@ func (p endPattern) match(s string) (int, bool) {
 	return 0, len(s) == 0
 }
 
+type zeroOrMoreAnyCharPattern struct {
+	terminator pattern
+}
+
+func (p zeroOrMoreAnyCharPattern) match(s string) (int, bool) {
+	return len(s), true
+}
+
 type zeroOrMoreCharPattern struct {
 	zeroOrMorePrecedingChar byte
 }
 
 func (p zeroOrMoreCharPattern) match(s string) (int, bool) {
-	if anyCharSymbol == p.zeroOrMorePrecedingChar {
-		return len(s), true
-	}
 	var length int
 	for length != len(s) && s[length] == p.zeroOrMorePrecedingChar {
 		length += 1

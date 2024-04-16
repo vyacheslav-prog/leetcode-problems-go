@@ -247,11 +247,18 @@ func TestPassesRepeatedZeroOrManyCharsWithEndingToCharPattern(t *testing.T) {
 	}
 }
 
-func TestMatchesZeroOrMoreCharPatternForTwoOtherCharWithAnyToken(t *testing.T) {
-	var c byte = '.'
+func TestMatchesZeroOrMoreAnyCharPatternForTwoDifferentChars(t *testing.T) {
 	s := "ab"
-	length, result := (zeroOrMoreCharPattern{c}).match(s)
+	length, result := (zeroOrMoreAnyCharPattern{}).match(s)
 	if result != true || length != 2 {
 		t.Errorf("Result must be [true] and [2] for a zero or more any char into [%v], actual is [%v] and [%v]", s, result, length)
+	}
+}
+
+func TestTerminatesZeroOrMoreAnyCharPatternForNextMatchableCharPattern(t *testing.T) {
+	s, term := "ba", charPattern{'a'}
+	length, result := (zeroOrMoreAnyCharPattern{term}).match(s)
+	if result != true || length != 1 {
+		t.Errorf("Result must be [true] and [1] for a pattern terminator [%v] of zero or more any char pattern for string [%v], actual is [%v] and [%v]", term, s, result, length)
 	}
 }
