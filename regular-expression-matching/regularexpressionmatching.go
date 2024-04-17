@@ -37,7 +37,18 @@ type zeroOrMoreAnyCharPattern struct {
 }
 
 func (p zeroOrMoreAnyCharPattern) match(s string) (int, bool) {
-	return len(s), true
+	var length int
+	if _, tResult := p.terminator.match(s); tResult {
+		return 0, false
+	} else {
+		length += 1
+	}
+	if len(s) != 0 {
+		if _, nResult := p.match(s[1:]); nResult {
+			length += 1
+		}
+	}
+	return length, true
 }
 
 type zeroOrMoreCharPattern struct {

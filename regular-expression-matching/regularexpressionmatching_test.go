@@ -249,7 +249,7 @@ func TestPassesRepeatedZeroOrManyCharsWithEndingToCharPattern(t *testing.T) {
 
 func TestMatchesZeroOrMoreAnyCharPatternForTwoDifferentChars(t *testing.T) {
 	s := "ab"
-	length, result := (zeroOrMoreAnyCharPattern{}).match(s)
+	length, result := (zeroOrMoreAnyCharPattern{endPattern{}}).match(s)
 	if result != true || length != 2 {
 		t.Errorf("Result must be [true] and [2] for a zero or more any char into [%v], actual is [%v] and [%v]", s, result, length)
 	}
