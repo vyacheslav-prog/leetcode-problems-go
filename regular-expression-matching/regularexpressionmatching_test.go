@@ -262,3 +262,27 @@ func TestTerminatesZeroOrMoreAnyCharPatternForNextMatchableCharPattern(t *testin
 		t.Errorf("Result must be [true] and [1] for a pattern terminator [%v] of zero or more any char pattern for string [%v], actual is [%v] and [%v]", term, s, result, length)
 	}
 }
+
+func TestParsesZeroOrMoreAnyCharPattern(t *testing.T) {
+	p := ".*"
+	result := parseStringPattern(p)
+	if expected := (zeroOrMoreAnyCharPattern{endPattern{}}); result[0] != expected {
+		t.Errorf("Result must be [%v] for parsed string [%v], actual is [%v]", expected, p, result)
+	}
+}
+
+func TestPassesZeroOrMoreAnyCharPatternWithTwoDifferentChars(t *testing.T) {
+	s, p := "ab", ".*"
+	result := isMatch(s, p)
+	if result != true {
+		t.Errorf("Result must be [true] for string [%v] and single pattern [%v], actual is [%v]", s, p, result)
+	}
+}
+
+func TestPassesZeroOrMoreCharPatternWithSameTerminatingCharForRepeatedChars(t *testing.T) {
+	s, p := "aaa", "a*a"
+	result := isMatch(s, p)
+	if result != true {
+		t.Errorf("Result must be [true] for string [%v] and a zero or more char [%v] with same next char, actual is [%v]", s, p, result)
+	}
+}

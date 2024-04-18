@@ -67,13 +67,18 @@ func detectNextPattern(p string) (int, pattern) {
 	if 0 == len(p) {
 		return 0, endPattern{}
 	}
-	if 1 < len(p) && zeroOrMoreCharSymbol == p[1] {
-		return 2, zeroOrMoreCharPattern{p[0]}
+	firstChar := p[0]
+	if 1 == len(p) || zeroOrMoreCharSymbol != p[1] {
+		if anyCharSymbol == firstChar {
+			return 1, anyCharPattern{}
+		}
+		return 1, charPattern{firstChar}
 	}
-	if anyCharSymbol == p[0] {
-		return 1, anyCharPattern{}
+	if anyCharSymbol != firstChar {
+		return 2, zeroOrMoreCharPattern{firstChar}
 	}
-	return 1, charPattern{p[0]}
+	_, nPattern := detectNextPattern(p[2:])
+	return 2, zeroOrMoreAnyCharPattern{nPattern}
 }
 
 func parseStringPattern(p string) []pattern {
