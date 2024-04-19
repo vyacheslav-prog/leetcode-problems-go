@@ -88,6 +88,10 @@ func parseStringPattern(p string) []pattern {
 	return []pattern{}
 }
 
+func planPatterns(pl []pattern) []pattern {
+	return []pattern{endPattern{}}
+}
+
 func isMatch(s string, p string) bool {
 	var result bool
 	for _, pattern := range append(parseStringPattern(p), endPattern{}) {
