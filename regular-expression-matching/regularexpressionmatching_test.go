@@ -289,8 +289,24 @@ func TestPassesZeroOrMoreCharPatternWithSameTerminatingCharForRepeatedChars(t *t
 }
 
 func TestPlansPassingForEmptyPatternList(t *testing.T) {
-	result := planPatterns([]pattern{})
+	result := planPatterns(0, []pattern{})
 	if result == nil || len(result) != 0 {
 		t.Errorf("Result must have zero plans for empty pattern list, actual is [%#v]", result)
+	}
+}
+
+func TestPlansSingleCharPattern(t *testing.T) {
+	pl := []pattern{charPattern{'a'}}
+	result := planPatterns(0, pl)
+	if len(result) != 1 {
+		t.Errorf("Result must have single char pattern list [%v], actual is [%v]", pl, result)
+	}
+}
+
+func TestPlansZeroOrMoreCharPattern(t *testing.T) {
+	numChars, pl := 1, []pattern{zeroOrMoreCharPattern{'a'}}
+	result := planPatterns(numChars, pl)
+	if expectedNum := 2; len(result) != expectedNum {
+		t.Errorf("Result must have [%v] variants of patterns for a single char string, actual is [%v]", expectedNum, len(result))
 	}
 }

@@ -88,8 +88,8 @@ func parseStringPattern(p string) []pattern {
 	return []pattern{}
 }
 
-func planPatterns(pl []pattern) []pattern {
-	return []pattern{endPattern{}}
+func planPatterns(numChars int, pl []pattern) []pattern {
+	return pl
 }
 
 func isMatch(s string, p string) bool {
