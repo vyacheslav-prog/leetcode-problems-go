@@ -4,8 +4,9 @@ func maxArea(height []int) int {
 	if len(height) < 2 {
 		return 0
 	}
-	if height[1] < height[0] {
-		return height[1]
+	leftLineIndex, rightLineIndex := 0, len(height)-1
+	for leftLineIndex+1 < rightLineIndex && height[leftLineIndex] < height[leftLineIndex+1] {
+		leftLineIndex += 1
 	}
-	return height[0]
+	return min(height[leftLineIndex], height[rightLineIndex]) * (rightLineIndex - leftLineIndex)
 }
