@@ -64,3 +64,11 @@ func TestStoresWaterForMiddleHighestLineAndEqualsFirstAndLastLines(t *testing.T)
 		t.Errorf("Result must be [%v] for lines with peak into middle [%v], actual is [%v]", expected, height, result)
 	}
 }
+
+func TestStoresWaterForSymmetricPeakWithSingleWidthAndHighestLines(t *testing.T) {
+	height := []int{1, 3, 3, 1}
+	result := maxArea(height)
+	if expected := 3; result != expected {
+		t.Errorf("Result must be [%v] for highest single-width lines of symmetric lines [%v], actual is [%v]", expected, height, result)
+	}
+}

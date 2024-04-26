@@ -8,5 +8,8 @@ func maxArea(height []int) int {
 	for leftLineIndex+1 < rightLineIndex && height[leftLineIndex] < height[leftLineIndex+1] {
 		leftLineIndex += 1
 	}
+	if hasSingleLineBetween := leftLineIndex == rightLineIndex-1; hasSingleLineBetween && height[rightLineIndex] < height[leftLineIndex] {
+		leftLineIndex = max(0, leftLineIndex-1)
+	}
 	return min(height[leftLineIndex], height[rightLineIndex]) * (rightLineIndex - leftLineIndex)
 }
