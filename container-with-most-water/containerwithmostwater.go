@@ -4,12 +4,14 @@ func maxArea(height []int) int {
 	if len(height) < 2 {
 		return 0
 	}
-	leftLineIndex, rightLineIndex := 0, len(height)-1
-	for leftLineIndex+1 < rightLineIndex && height[leftLineIndex] < height[leftLineIndex+1] {
-		leftLineIndex += 1
+	var mostWaterAmount int
+	for leftLineIndex := 0; leftLineIndex != len(height); leftLineIndex += 1 {
+		for rightLineIndex := leftLineIndex + 1; rightLineIndex != len(height); rightLineIndex += 1 {
+			waterAmount := min(height[leftLineIndex], height[rightLineIndex]) * (rightLineIndex - leftLineIndex)
+			if mostWaterAmount < waterAmount {
+				mostWaterAmount = waterAmount
+			}
+		}
 	}
-	if hasSingleLineBetween := leftLineIndex == rightLineIndex-1; hasSingleLineBetween && height[rightLineIndex] < height[leftLineIndex] {
-		leftLineIndex = max(0, leftLineIndex-1)
-	}
-	return min(height[leftLineIndex], height[rightLineIndex]) * (rightLineIndex - leftLineIndex)
+	return mostWaterAmount
 }
