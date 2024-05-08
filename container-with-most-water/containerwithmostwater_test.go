@@ -2,6 +2,13 @@ package containerwithmostwater
 
 import "testing"
 
+func BenchmarkBruteForceForPeakOfTen(b *testing.B) {
+	height := []int{1, 2, 3, 4, 5, 5, 4, 3, 2, 1}
+	for i := 0; i < b.N; i++ {
+		maxAreaBruteForce(height)
+	}
+}
+
 func TestEmptyWaterForEmptyContainer(t *testing.T) {
 	result := maxArea([]int{})
 	if result != 0 {

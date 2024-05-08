@@ -1,6 +1,10 @@
 package containerwithmostwater
 
 func maxArea(height []int) int {
+	return maxAreaBruteForce(height)
+}
+
+func maxAreaBruteForce(height []int) int {
 	if len(height) < 2 {
 		return 0
 	}
