@@ -5,13 +5,11 @@ func maxArea(height []int) int {
 }
 
 func maxAreaBruteForce(height []int) int {
-	if len(height) < 2 {
-		return 0
-	}
 	var mostWaterAmount int
-	for leftLineIndex := 0; leftLineIndex != len(height); leftLineIndex += 1 {
+	for leftLineIndex, leftLine := range height {
 		for rightLineIndex := leftLineIndex + 1; rightLineIndex != len(height); rightLineIndex += 1 {
-			waterAmount := min(height[leftLineIndex], height[rightLineIndex]) * (rightLineIndex - leftLineIndex)
+			rightLine, distance := height[rightLineIndex], rightLineIndex-leftLineIndex
+			waterAmount := min(leftLine, rightLine) * distance
 			if mostWaterAmount < waterAmount {
 				mostWaterAmount = waterAmount
 			}
