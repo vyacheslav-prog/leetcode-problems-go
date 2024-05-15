@@ -92,6 +92,17 @@ func planPatterns(numChars int, pl []pattern) []pattern {
 	return pl
 }
 
+func isMatchWithMemo(s string, p string) bool {
+	stringRowsNum, patternColumnsNum := len(s)+1, len(p)+1
+	solutionsNum := stringRowsNum * patternColumnsNum
+	solutions := make([]bool, solutionsNum)
+	solutions[0] = true // for empty string and empty pattern
+	for patternColumnsCounter := 2; patternColumnsCounter != patternColumnsNum; patternColumnsCounter += 1 {
+		solutions[patternColumnsCounter] = solutions[patternColumnsCounter-2] && zeroOrMoreCharSymbol == p[patternColumnsCounter-1]
+	}
+	return solutions[solutionsNum]
+}
+
 func isMatch(s string, p string) bool {
 	var result bool
 	for _, pattern := range append(parseStringPattern(p), endPattern{}) {
