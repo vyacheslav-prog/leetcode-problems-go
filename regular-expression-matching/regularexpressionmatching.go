@@ -92,18 +92,7 @@ func planPatterns(numChars int, pl []pattern) []pattern {
 	return pl
 }
 
-func isMatchWithMemo(s string, p string) bool {
-	stringRowsNum, patternColumnsNum := len(s)+1, len(p)+1
-	solutionsNum := stringRowsNum * patternColumnsNum
-	solutions := make([]bool, solutionsNum)
-	solutions[0] = true // for empty string and empty pattern
-	for patternColumnsCounter := 2; patternColumnsCounter != patternColumnsNum; patternColumnsCounter += 1 {
-		solutions[patternColumnsCounter] = solutions[patternColumnsCounter-2] && zeroOrMoreCharSymbol == p[patternColumnsCounter-1]
-	}
-	return solutions[solutionsNum]
-}
-
-func isMatch(s string, p string) bool {
+func isMatchBruteForce(s string, p string) bool {
 	var result bool
 	for _, pattern := range append(parseStringPattern(p), endPattern{}) {
 		capturedLength, isMatched := pattern.match(s)
@@ -114,4 +103,22 @@ func isMatch(s string, p string) bool {
 		s = s[capturedLength:]
 	}
 	return result
+}
+
+func isMatchWithMemo(s string, p string) bool {
+	stringRowsNum, patternColumnsNum := len(s)+1, len(p)+1
+	solutionsNum := stringRowsNum * patternColumnsNum
+	if 1 == solutionsNum {
+		return true
+	}
+	solutions := make([]bool, solutionsNum)
+	solutions[0] = true // for empty string and empty pattern
+	for patternColumnsCounter := 2; patternColumnsCounter != patternColumnsNum; patternColumnsCounter += 1 {
+		solutions[patternColumnsCounter] = solutions[patternColumnsCounter-2] && zeroOrMoreCharSymbol == p[patternColumnsCounter-1]
+	}
+	return solutions[patternColumnsNum-1]
+}
+
+func isMatch(s string, p string) bool {
+	return isMatchWithMemo(s, p)
 }
