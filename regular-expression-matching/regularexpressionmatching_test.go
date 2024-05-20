@@ -280,7 +280,6 @@ func TestPassesZeroOrMoreAnyCharPatternWithTwoDifferentChars(t *testing.T) {
 }
 
 func TestPassesZeroOrMoreCharPatternWithSameTerminatingCharForRepeatedChars(t *testing.T) {
-	t.Skip()
 	s, p := "aaa", "a*a"
 	result := isMatch(s, p)
 	if result != true {

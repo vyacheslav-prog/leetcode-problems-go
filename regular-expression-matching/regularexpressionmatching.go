@@ -117,7 +117,7 @@ func isMatchWithMemo(s string, p string) bool {
 		solutions[patternColumnsCounter] = solutions[patternColumnsCounter-2] && zeroOrMoreCharSymbol == p[patternColumnsCounter-1]
 	}
 	for stringRowsCounter := 1; stringRowsCounter != stringRowsNum; stringRowsCounter += 1 {
-		stringOffset, stringSymbol := stringRowsCounter*stringRowsNum, s[stringRowsCounter-1]
+		stringOffset, stringSymbol := stringRowsCounter*patternColumnsNum, s[stringRowsCounter-1]
 		for patternColumnsCounter := 1; patternColumnsCounter != patternColumnsNum; patternColumnsCounter += 1 {
 			patternSymbol, solution := p[patternColumnsCounter-1], false
 			if zeroOrMoreCharSymbol != patternSymbol {
@@ -125,7 +125,7 @@ func isMatchWithMemo(s string, p string) bool {
 			} else if solutions[stringOffset+patternColumnsCounter-1] {
 				solution = solutions[stringOffset+patternColumnsCounter-1]
 			} else {
-				previousPatternSymbol, previousSolution := p[patternColumnsCounter-2], solutions[patternColumnsCounter+(stringRowsCounter-1*stringRowsNum)]
+				previousPatternSymbol, previousSolution := p[patternColumnsCounter-2], solutions[patternColumnsCounter+(stringRowsCounter-1*patternColumnsNum)]
 				solution = (previousPatternSymbol == stringSymbol || anyCharSymbol == previousPatternSymbol) && previousSolution
 			}
 			solutions[patternColumnsCounter+stringOffset] = solution
