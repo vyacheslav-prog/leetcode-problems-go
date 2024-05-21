@@ -114,22 +114,25 @@ func isMatchWithMemo(s string, p string) bool {
 	solutions := make([]bool, solutionsNum)
 	solutions[0] = true // for empty string and empty pattern
 	for patternColumnsCounter := 2; patternColumnsCounter != patternColumnsNum; patternColumnsCounter += 1 {
-		solutions[patternColumnsCounter] = solutions[patternColumnsCounter-2] && zeroOrMoreCharSymbol == p[patternColumnsCounter-1]
+		if zeroOrMoreCharSymbol == p[patternColumnsCounter-1] {
+			solutions[patternColumnsCounter] = solutions[patternColumnsCounter-2]
+		}
 	}
-	for stringRowsCounter := 1; stringRowsCounter != stringRowsNum; stringRowsCounter += 1 {
-		stringOffset, stringSymbol := stringRowsCounter*patternColumnsNum, s[stringRowsCounter-1]
+	for previousStringOffset, stringRowsCounter := 0, 1; stringRowsCounter != stringRowsNum; stringRowsCounter += 1 {
+		stringOffset, stringSymbol := previousStringOffset+patternColumnsNum, s[stringRowsCounter-1]
 		for patternColumnsCounter := 1; patternColumnsCounter != patternColumnsNum; patternColumnsCounter += 1 {
-			patternSymbol, solution := p[patternColumnsCounter-1], false
+			patternSymbol, solution := p[patternColumnsCounter-1], solutions[previousStringOffset+patternColumnsCounter-1]
 			if zeroOrMoreCharSymbol != patternSymbol {
-				solution = patternSymbol == stringSymbol || anyCharSymbol == patternSymbol
-			} else if solutions[stringOffset+patternColumnsCounter-1] {
-				solution = solutions[stringOffset+patternColumnsCounter-1]
+				solution = solution && (patternSymbol == stringSymbol || anyCharSymbol == patternSymbol)
+			} else if prevPatternSymbolSolution := solutions[stringOffset+patternColumnsCounter-2]; prevPatternSymbolSolution {
+				solution = prevPatternSymbolSolution
 			} else {
-				previousPatternSymbol, previousSolution := p[patternColumnsCounter-2], solutions[patternColumnsCounter+(stringRowsCounter-1*patternColumnsNum)]
-				solution = (previousPatternSymbol == stringSymbol || anyCharSymbol == previousPatternSymbol) && previousSolution
+				previousPatternSymbol, prevStringSymbolSolution := p[patternColumnsCounter-2], solutions[previousStringOffset+patternColumnsCounter]
+				solution = (previousPatternSymbol == stringSymbol || anyCharSymbol == previousPatternSymbol) && prevStringSymbolSolution
 			}
 			solutions[patternColumnsCounter+stringOffset] = solution
 		}
+		previousStringOffset += patternColumnsNum
 	}
 	return solutions[solutionsNum-1]
 }

@@ -302,10 +302,18 @@ func TestPlansSingleCharPattern(t *testing.T) {
 	}
 }
 
-func TestPlansZeroOrMoreCharPattern(t *testing.T) {
-	numChars, pl := 1, []pattern{zeroOrMoreCharPattern{'a'}}
-	result := planPatterns(numChars, pl)
-	if expectedNum := 2; len(result) != expectedNum {
-		t.Errorf("Result must have [%v] variants of patterns for a single char string, actual is [%v]", expectedNum, len(result))
+func TestRejectsRepeatedCharStringToSameSingleCharPattern(t *testing.T) {
+	p, s := "a", "aa"
+	result := isMatch(s, p)
+	if result != false {
+		t.Errorf("Result must be [false] for repeated char string [%v] and pattern [%v], actual is [%v]", s, p, result)
+	}
+}
+
+func TestPassesRepeatedChatPatternWithRepeatedCharWithinZeroMatchedChars(t *testing.T) {
+	p, s := "ab*ac*a", "aaa"
+	result := isMatch(s, p)
+	if result != true {
+		t.Errorf("Result must be [true] for repeated chars [%v] within zero matched chars [%v], actual is [%v]", s, p, result)
 	}
 }
