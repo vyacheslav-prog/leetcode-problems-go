@@ -32,3 +32,35 @@ func TestConvertsTwoAsRepeatedUnitSymbol(t *testing.T) {
 		t.Errorf("Result must be [%v] for number [%v], actual is [%v]", expected, num, result)
 	}
 }
+
+func TestConvertsWithAppendingOtherSymbols(t *testing.T) {
+	num := 6
+	result := intToRoman(num)
+	if expected := "VI"; expected != result {
+		t.Errorf("Result must be appending [%v] for number [%v], actual is [%v]", expected, num, result)
+	}
+}
+
+func TestConvertsWithSubstractingOtherSymbol(t *testing.T) {
+	num := 4
+	result := intToRoman(num)
+	if expected := "IV"; expected != result {
+		t.Errorf("Result must be substractive [%v] for number [%v], actual is [%v]", expected, num, result)
+	}
+}
+
+func TestConvertsWithAppendingAndSubstractingOtherSymbol(t *testing.T) {
+	num := 19
+	result := intToRoman(num)
+	if expected := "XIX"; result != expected {
+		t.Errorf("Result must be appended and substracted [%v] for number [%v], actual is [%v]", expected, num, result)
+	}
+}
+
+func TestConvertsWithAppendingAndSubstractingOtherSymbolForThousands(t *testing.T) {
+	num := 1900
+	result := intToRoman(num)
+	if expected := "MCM"; result != expected {
+		t.Errorf("Result must be appended and substracted [%v] for number [%v], actual is [%v]", expected, num, result)
+	}
+}
