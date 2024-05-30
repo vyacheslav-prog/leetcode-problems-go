@@ -50,7 +50,6 @@ func TestFindsPrefixForTwoStringsWithEqualsStartsSubstringAndDifferentLength(t *
 }
 
 func TestFindsPrefixForTwoStringsWithEqualsFirstChar(t *testing.T) {
-	t.Skip()
 	strs := []string{"aa", "ab"}
 	result := longestCommonPrefix(strs)
 	if expected := "a"; expected != result {
