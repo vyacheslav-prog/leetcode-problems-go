@@ -40,3 +40,19 @@ func TestFindsLastTripletForFourNumsWhenTotalSumIsNotZero(t *testing.T) {
 		t.Errorf("Result must have [%v] for last triplet for nums [%v], actual is [%v]", expected, nums, result)
 	}
 }
+
+func TestFindsMiddleTripletForFiveNumsWhenTotalSumIsNotZero(t *testing.T) {
+	nums := []int{2, -1, 0, 1, 2}
+	result := threeSum(nums)
+	if expected := [3]int{-1, 0, 1}; 1 != len(result) || expected != [3]int(result[0]) {
+		t.Errorf("Result must have [%v] for middle triplet for nums [%v], actual is [%v]", expected, nums, result)
+	}
+}
+
+func TestFindsOutOfOrderTriplet(t *testing.T) {
+	nums := []int{-1, 0, 0, 1}
+	result := threeSum(nums)
+	if expected := [3]int{-1, 0, 1}; 1 != len(result) || expected != [3]int(result[0]) {
+		t.Errorf("Result must have [%v] for out of order triplet for nums [%v], actual is [%v]", expected, nums, result)
+	}
+}

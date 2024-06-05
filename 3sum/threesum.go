@@ -2,14 +2,16 @@ package threesum
 
 func threeSum(nums []int) [][]int {
 	var result [][]int
-	if 2 < len(nums) {
-		var sum int
-		for _, number := range nums[:3] {
-			sum += number
+	var lastIndex, sum int
+	for index := 0; index != len(nums) && (lastIndex < 3 || 0 != sum); index += 1 {
+		if 2 < lastIndex {
+			sum -= nums[lastIndex-3]
 		}
-		if 0 == sum {
-			result = append(result, nums)
-		}
+		sum += nums[index]
+		lastIndex += 1
+	}
+	if 0 == sum && 2 < lastIndex {
+		result = append(result, nums[lastIndex-3:lastIndex])
 	}
 	return result
 }
