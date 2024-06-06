@@ -2,16 +2,19 @@ package threesum
 
 func threeSum(nums []int) [][]int {
 	var result [][]int
-	var lastIndex, sum int
-	for index := 0; index != len(nums) && (lastIndex < 3 || 0 != sum); index += 1 {
-		if 2 < lastIndex {
-			sum -= nums[lastIndex-3]
+	var triplet []int
+	for firstIndex := 0; firstIndex != len(nums) && 0 == len(triplet); firstIndex += 1 {
+		for secondIndex := firstIndex + 1; secondIndex != len(nums); secondIndex += 1 {
+			for balance, thirdIndex := nums[firstIndex]+nums[secondIndex], secondIndex+1; thirdIndex != len(nums); thirdIndex += 1 {
+				if 0 == nums[thirdIndex]+balance {
+					triplet = []int{nums[firstIndex], nums[secondIndex], nums[thirdIndex]}
+					break
+				}
+			}
 		}
-		sum += nums[index]
-		lastIndex += 1
 	}
-	if 0 == sum && 2 < lastIndex {
-		result = append(result, nums[lastIndex-3:lastIndex])
+	if 3 == len(triplet) {
+		result = append(result, triplet)
 	}
 	return result
 }
