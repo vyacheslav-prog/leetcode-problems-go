@@ -56,3 +56,27 @@ func TestFindsOutOfOrderTriplet(t *testing.T) {
 		t.Errorf("Result must have [%v] for out of order triplet for nums [%v], actual is [%v]", expected, nums, result)
 	}
 }
+
+func TestFindsTwoTriplet(t *testing.T) {
+	nums := []int{-2, -1, 0, 1, 2}
+	result := threeSum(nums)
+	if secondExpected := [3]int{-1, 0, 1}; 2 != len(result) || secondExpected != [3]int(result[1]) {
+		t.Errorf("Result must have second triplet [%v] for nums [%v], actual is [%v]", secondExpected, nums, result)
+	}
+}
+
+func TestFindTwoTripletsForUnorderedNums(t *testing.T) {
+	nums := []int{-1, 0, 1, 2, -1, -4}
+	result := threeSum(nums)
+	if 2 != len(result) {
+		t.Errorf("Result must have two triplets for unordered nums [%v], actual is [%v]", nums, result)
+	}
+}
+
+func TestFindsUniqueTripletForFourZeros(t *testing.T) {
+	nums := []int{0, 0, 0, 0}
+	result := threeSum(nums)
+	if 1 != len(result) {
+		t.Errorf("Result must be single triplet for zero nums [%v], actual is [%v]", nums, result)
+	}
+}

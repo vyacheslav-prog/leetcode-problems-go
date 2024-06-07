@@ -12,9 +12,10 @@ func threeSum(nums []int) [][]int {
 				}
 			}
 		}
-	}
-	if 3 == len(triplet) {
-		result = append(result, triplet)
+		if 3 == len(triplet) {
+			result = append(result, triplet)
+			triplet = []int{}
+		}
 	}
 	return result
 }
