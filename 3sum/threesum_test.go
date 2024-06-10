@@ -80,3 +80,19 @@ func TestFindsUniqueTripletForFourZeros(t *testing.T) {
 		t.Errorf("Result must be single triplet for zero nums [%v], actual is [%v]", nums, result)
 	}
 }
+
+func TestFindsTwoTripletsWithSameFirstNum(t *testing.T) {
+	nums := []int{-2, 0, 1, 1, 2}
+	result := threeSum(nums)
+	if 2 != len(result) {
+		t.Errorf("Result must have two triplets for same first nums of nums [%v], actual is [%v]", nums, result)
+	}
+}
+
+func TestFindsManyTriplets(t *testing.T) {
+	nums := []int{-1, 0, 1, 2, -1, -4, -2, -3, 3, 0, 4}
+	result := threeSum(nums)
+	if 9 != len(result) {
+		t.Errorf("Result must have nine triplets for many nums [%v], actual is [%v]", nums, result)
+	}
+}
