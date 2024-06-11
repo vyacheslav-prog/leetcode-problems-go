@@ -96,3 +96,11 @@ func TestFindsManyTriplets(t *testing.T) {
 		t.Errorf("Result must have nine triplets for many nums [%v], actual is [%v]", nums, result)
 	}
 }
+
+func TestFindsUniqueTripletsForRepeatedFirstNum(t *testing.T) {
+	nums := []int{-1, -1, -1, 0, 1, 2}
+	result := threeSum(nums)
+	if firstExpected, secondExpected := [3]int{-1, -1, 2}, [3]int{-1, 0, 1}; 2 != len(result) || firstExpected != [3]int(result[0]) || secondExpected != [3]int(result[1]) {
+		t.Errorf("Result must have [%v] and [%v] for first num repeated nums [%v], actual is [%v]", firstExpected, secondExpected, nums, result)
+	}
+}
