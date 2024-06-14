@@ -4,21 +4,23 @@ import "sort"
 
 func threeSum(nums []int) [][]int {
 	var result [][]int
-	var triplet []int
-	prevBalances := make(map[int]int)
 	sort.Ints(nums)
 	for firstIndex := 0; firstIndex != len(nums); firstIndex += 1 {
-		for secondIndex := firstIndex + 1; secondIndex != len(nums); secondIndex += 1 {
-			balance := nums[firstIndex] + nums[secondIndex]
-			triplet = nil
-			for thirdIndex := secondIndex + 1; nil == triplet && thirdIndex != len(nums); thirdIndex += 1 {
-				if 0 == nums[thirdIndex]+balance {
-					triplet = []int{nums[firstIndex], nums[secondIndex], nums[thirdIndex]}
-				}
-			}
-			if firstNumber, alreadyFound := prevBalances[balance]; nil != triplet && (alreadyFound != true || firstNumber != triplet[0]) {
-				prevBalances[balance] = triplet[0]
-				result = append(result, triplet)
+		firstNumber := nums[firstIndex]
+		if firstIndex != 0 && firstNumber == nums[firstIndex-1] {
+			continue
+		}
+		balance := -1 * firstNumber
+		for leftIndex, rightIndex := firstIndex+1, len(nums)-1; leftIndex < rightIndex; {
+			leftNumber, rightNumber := nums[leftIndex], nums[rightIndex]
+			if twoSum := leftNumber + rightNumber; balance == twoSum {
+				result = append(result, []int{firstNumber, leftNumber, rightNumber})
+				leftIndex += 1
+				rightIndex -= 1
+			} else if twoSum < balance {
+				leftIndex += 1
+			} else {
+				rightIndex -= 1
 			}
 		}
 	}

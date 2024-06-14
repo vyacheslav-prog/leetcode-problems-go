@@ -2,6 +2,13 @@ package threesum
 
 import "testing"
 
+func BenchmarkFindTriplets(b *testing.B) {
+	nums := []int{-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5}
+	for i := 0; i < b.N; i++ {
+		threeSum(nums)
+	}
+}
+
 func TestFindsZeroTripletsForEmptyNums(t *testing.T) {
 	result := threeSum([]int{})
 	if 0 != len(result) {
@@ -12,7 +19,7 @@ func TestFindsZeroTripletsForEmptyNums(t *testing.T) {
 func TestFindsTripletsForAllNums(t *testing.T) {
 	nums := []int{0, 0, 0}
 	result := threeSum(nums)
-	if expected := [3]int{0, 0, 0}; expected != [3]int(result[0]) {
+	if expected := [3]int{0, 0, 0}; 1 != len(result) || expected != [3]int(result[0]) {
 		t.Errorf("Result must have [%v] for all nums [%v], actual is [%v]", expected, nums, result)
 	}
 }
@@ -102,5 +109,13 @@ func TestFindsUniqueTripletsForRepeatedFirstNum(t *testing.T) {
 	result := threeSum(nums)
 	if firstExpected, secondExpected := [3]int{-1, -1, 2}, [3]int{-1, 0, 1}; 2 != len(result) || firstExpected != [3]int(result[0]) || secondExpected != [3]int(result[1]) {
 		t.Errorf("Result must have [%v] and [%v] for first num repeated nums [%v], actual is [%v]", firstExpected, secondExpected, nums, result)
+	}
+}
+
+func TestFindsTwoTripletsWithSameLastNums(t *testing.T) {
+	nums := []int{-2, 0, 0, 2, 2}
+	result := threeSum(nums)
+	if expected := [3]int{-2, 0, 2}; 1 != len(result) || expected != [3]int(result[0]) {
+		t.Errorf("Result must have single triplet [%v] for same last nums of nums [%v], actual is [%v]", expected, nums, result)
 	}
 }
