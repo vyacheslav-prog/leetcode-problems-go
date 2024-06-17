@@ -11,10 +11,14 @@ func threeSum(nums []int) [][]int {
 			continue
 		}
 		balance := -1 * firstNumber
-		for leftIndex, rightIndex := firstIndex+1, len(nums)-1; leftIndex < rightIndex; {
+		leftIndex, rightIndex := firstIndex+1, len(nums)-1
+		for leftIndex < rightIndex {
 			leftNumber, rightNumber := nums[leftIndex], nums[rightIndex]
 			if twoSum := leftNumber + rightNumber; balance == twoSum {
-				result = append(result, []int{firstNumber, leftNumber, rightNumber})
+				triplet := []int{firstNumber, leftNumber, rightNumber}
+				if 0 == len(result) || [3]int(result[len(result)-1]) != [3]int(triplet) {
+					result = append(result, triplet)
+				}
 				leftIndex += 1
 				rightIndex -= 1
 			} else if twoSum < balance {
