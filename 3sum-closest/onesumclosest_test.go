@@ -24,3 +24,19 @@ func TestOneFindsNumForEqualedTarget(t *testing.T) {
 		t.Errorf("Result must be [%v] for found target [%v] into nums [%v], actual is [%v]", expected, target, nums, result)
 	}
 }
+
+func TestOneFindsNumForClosestTarget(t *testing.T) {
+	nums, target := []int{-3, -1, 0}, -2
+	result := oneSumClosest(nums, target)
+	if expected := -3; expected != result {
+		t.Errorf("Result must be [%v] for closest target [%v] in nums [%v], actual is [%v]", expected, target, nums, result)
+	}
+}
+
+func TestOneFindsNumForClosestTargetWhenNumsIsUnordered(t *testing.T) {
+	nums, target := []int{3, -3, 2, 0}, 1
+	result := oneSumClosest(nums, target)
+	if expected := 0; expected != result {
+		t.Errorf("Result must be [%v] for target [%v] in unordered nums [%v], actual is [%v]", expected, target, nums, result)
+	}
+}

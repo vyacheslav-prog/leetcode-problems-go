@@ -8,9 +8,14 @@ func oneSumClosest(nums []int, target int) int {
 	}
 	sort.Ints(nums)
 	result := nums[0]
-	for index, reverse := 0, -1*target; index != len(nums); index += 1 {
-		if 0 == index || (reverse+nums[index] <= reverse+result) {
+	for index, resultDistance := 0, 0; index != len(nums); index += 1 {
+		distance := target - nums[index]
+		if distance < 0 {
+			distance *= -1
+		}
+		if 0 == index || distance < resultDistance {
 			result = nums[index]
+			resultDistance = distance
 		}
 	}
 	return result
