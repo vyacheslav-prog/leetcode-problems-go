@@ -1,5 +1,9 @@
 package threesumclosest
 
 func threeSumClosest(nums []int, target int) int {
-	return 0
+	var result int
+	for _, value := range nums {
+		result += value
+	}
+	return result
 }
