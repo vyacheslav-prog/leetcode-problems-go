@@ -8,6 +8,14 @@ func threeSumClosest(nums []int, target int) int {
 	for firstIndex := 0; firstIndex < len(nums)-2; firstIndex += 1 {
 		for secondIndex, thirdIndex := firstIndex+1, len(nums)-1; secondIndex != thirdIndex; {
 			sum = nums[firstIndex] + nums[secondIndex] + nums[thirdIndex]
+			distance = target - sum
+			if distance < 0 {
+				distance *= -1
+			}
+			if result == 0 || distance < resultDistance {
+				result = sum
+				resultDistance = distance
+			}
 			if sum < target {
 				secondIndex += 1
 			} else if target < sum {
@@ -15,14 +23,6 @@ func threeSumClosest(nums []int, target int) int {
 			} else {
 				secondIndex = thirdIndex
 			}
-		}
-		distance = target - sum
-		if distance < 0 {
-			distance *= -1
-		}
-		if 0 == firstIndex || distance < resultDistance {
-			result = sum
-			resultDistance = distance
 		}
 	}
 	return result

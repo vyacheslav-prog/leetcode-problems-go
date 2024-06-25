@@ -56,3 +56,11 @@ func TestFindsClosestSumForFirstAndMinimalTriplet(t *testing.T) {
 		t.Errorf("Result must be minimal [%v] for nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
 	}
 }
+
+func TestFindsClosestSumForEqualNegativeSum(t *testing.T) {
+	nums, target := []int{4, 0, 5, -5, 3, 3, 0, -4, -5}, -2
+	result := threeSumClosest(nums, target)
+	if expected := target; expected != result {
+		t.Errorf("Result must be equals target [%v] for nums [%v], actual is [%v]", expected, nums, result)
+	}
+}
