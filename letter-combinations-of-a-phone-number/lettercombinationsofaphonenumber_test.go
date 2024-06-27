@@ -72,3 +72,11 @@ func TestCombinatesForSingleDigit9(t *testing.T) {
 		t.Errorf("Result must be [%v] for single digit [%v], actual is [%v]", expected, digits, result)
 	}
 }
+
+func TestCombinatesForDoubleDigit2(t *testing.T) {
+	digits := "22"
+	result := letterCombinations(digits)
+	if expected := [9]string{"aa", "ab", "ac", "ba", "bb", "bc", "ca", "cb", "cc"}; 9 != len(result) || expected != [9]string(result) {
+		t.Errorf("Result must be [%v] for double digits [%v], actual is [%v]", expected, digits, result)
+	}
+}
