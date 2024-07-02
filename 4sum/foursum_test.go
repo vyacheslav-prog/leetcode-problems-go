@@ -24,3 +24,11 @@ func TestFindsZeroQuadrupletsWhenTargetIsNotEqualANumsSum(t *testing.T) {
 		t.Errorf("Result must be empty for nums [%v] and target [%v], actual is [%v]", nums, target, result)
 	}
 }
+
+func TestFindsQuadrupletForStartingTargetNumsAndAddsIntoEnd(t *testing.T) {
+	nums, target := []int{1, 1, 1, 1, 2}, 4
+	result := fourSum(nums, target)
+	if expected := [4]int(nums[:4]); 1 != len(result) || expected != [4]int(result[0]) {
+		t.Errorf("Result must be [%v] for starting quadruplet into nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
+	}
+}
