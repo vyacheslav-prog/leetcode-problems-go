@@ -32,3 +32,19 @@ func TestFindsQuadrupletForStartingTargetNumsAndAddsIntoEnd(t *testing.T) {
 		t.Errorf("Result must be [%v] for starting quadruplet into nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
 	}
 }
+
+func TestFindsQuadrupletForEndingTargetNumsAndStartedOthers(t *testing.T) {
+	nums, target := []int{2, 1, 1, 1, 1}, 4
+	result := fourSum(nums, target)
+	if expected := [4]int(nums[1:]); 1 != len(result) || expected != [4]int(result[0]) {
+		t.Errorf("Result must be [%v] for ending quadruplet into nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
+	}
+}
+
+func TestFindsQuadrupletForNumsWithUnsuitableNumIntoMiddle(t *testing.T) {
+	nums, target := []int{1, 0, 1, 1, 1}, 4
+	result := fourSum(nums, target)
+	if expected := [4]int{1, 1, 1, 1}; 1 != len(result) || expected != [4]int(result[0]) {
+		t.Errorf("Result must be [%v] for nums [%v] with unsuitable nums and target [%v], actual is [%v]", expected, nums, target, result)
+	}
+}
