@@ -1,15 +1,25 @@
 package foursum
 
+import "sort"
+
+const size int = 4
+
 func fourSum(nums []int, target int) [][]int {
-	if len(nums) < 4 {
+	if len(nums) < size {
 		return nil
 	}
+	var quadruplet []int
+	var quadrupletSum int
 	var result [][]int
-	var sum int
-	for index := 3; index != len(nums); index += 1 {
-		sum = nums[index] + nums[index-1] + nums[index-2] + nums[index-3]
-		if target == sum {
-			result = append(result, nums[index-3:index+1])
+	sort.Ints(nums)
+	for index := size - 1; index != len(nums); index += 1 {
+		quadruplet = nums[index-size+1 : index+1]
+		quadrupletSum = 0
+		for _, value := range quadruplet {
+			quadrupletSum += value
+		}
+		if target == quadrupletSum {
+			result = append(result, quadruplet)
 		}
 	}
 	return result
