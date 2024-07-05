@@ -2,25 +2,48 @@ package foursum
 
 import "sort"
 
-const size int = 4
-
-func fourSum(nums []int, target int) [][]int {
-	if len(nums) < size {
-		return nil
-	}
-	var quadruplet []int
-	var quadrupletSum int
+func findUniqueTargetPairsForSortedNums(nums []int, target int) [][]int {
 	var result [][]int
-	sort.Ints(nums)
-	for index := size - 1; index != len(nums); index += 1 {
-		quadruplet = nums[index-size+1 : index+1]
-		quadrupletSum = 0
-		for _, value := range quadruplet {
-			quadrupletSum += value
-		}
-		if target == quadrupletSum {
-			result = append(result, quadruplet)
+	firstIndex, lastIndex := 0, len(nums)-1
+	for firstIndex < lastIndex {
+		if target == (nums[firstIndex] + nums[lastIndex]) {
+			result = append(result, []int{nums[firstIndex], nums[lastIndex]})
+			firstIndex += 1
+			lastIndex -= 1
+		} else if target < (nums[firstIndex] + nums[lastIndex]) {
+			firstIndex += 1
+		} else {
+			lastIndex -= 1
 		}
 	}
 	return result
+}
+
+func findUniqueTargetSumGroupsForSortedNumsBySize(nums []int, size, startIndex, target int) [][]int {
+	if len(nums) < size {
+		return nil
+	}
+	if (target / size) < nums[0] {
+		return nil
+	}
+	if nums[len(nums)-1] < (target / size) {
+		return nil
+	}
+	if 2 == target {
+		return findUniqueTargetPairsForSortedNums(nums, target)
+	}
+	var result [][]int
+	for index := startIndex; index != len(nums); index += 1 {
+		if index == startIndex || nums[index] != nums[index-1] {
+			for _, subGroup := range findUniqueTargetSumGroupsForSortedNumsBySize(nums, size-1, index+1, target-nums[index]) {
+				result = append(result, append(subGroup, nums[index]))
+			}
+		}
+	}
+	return result
+}
+
+func fourSum(nums []int, target int) [][]int {
+	sort.Ints(nums)
+	return findUniqueTargetSumGroupsForSortedNumsBySize(nums, 4, 0, target)
 }
