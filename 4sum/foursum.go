@@ -2,35 +2,29 @@ package foursum
 
 import "sort"
 
-func findUniqueTargetPairsForSortedNums(nums []int, target int) [][]int {
+func findUniqueTargetPairsForSortedNums(nums []int, startIndex, target int) [][]int {
 	var result [][]int
-	firstIndex, lastIndex := 0, len(nums)-1
-	for firstIndex < lastIndex {
-		if target == (nums[firstIndex] + nums[lastIndex]) {
-			result = append(result, []int{nums[firstIndex], nums[lastIndex]})
-			firstIndex += 1
-			lastIndex -= 1
-		} else if target < (nums[firstIndex] + nums[lastIndex]) {
-			firstIndex += 1
+	leftIndex, rightIndex := startIndex, len(nums)-1
+	for leftIndex < rightIndex {
+		if pairSum := nums[leftIndex] + nums[rightIndex]; target < pairSum {
+			rightIndex -= 1
+		} else if pairSum < target {
+			leftIndex += 1
 		} else {
-			lastIndex -= 1
+			result = append(result, []int{nums[leftIndex], nums[rightIndex]})
+			leftIndex += 1
+			rightIndex -= 1
 		}
 	}
 	return result
 }
 
 func findUniqueTargetSumGroupsForSortedNumsBySize(nums []int, size, startIndex, target int) [][]int {
-	if len(nums) < size {
-		return nil
-	}
-	if (target / size) < nums[0] {
-		return nil
-	}
-	if nums[len(nums)-1] < (target / size) {
+	if (len(nums) < size) || (target < (nums[0] * size)) || ((nums[len(nums)-1] * size) < target) {
 		return nil
 	}
 	if 2 == target {
-		return findUniqueTargetPairsForSortedNums(nums, target)
+		return findUniqueTargetPairsForSortedNums(nums, startIndex, target)
 	}
 	var result [][]int
 	for index := startIndex; index != len(nums); index += 1 {
