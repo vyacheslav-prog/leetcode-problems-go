@@ -56,3 +56,11 @@ func TestFindsManyQuadrupletsForZeroTargetAndVariousNums(t *testing.T) {
 		t.Errorf("Result must have [3] quadruplets for nums [%v] and target [%v], actual is [%v]", nums, target, result)
 	}
 }
+
+func TestFindsUniqueQuadrupletsForDuplicatePairs(t *testing.T) {
+	nums, target := []int{0, 0, 1, 1, 1, 1}, 2
+	result := fourSum(nums, target)
+	if 1 != len(result) {
+		t.Errorf("Result must have [1] quadruplet for nums [%v] with duplicates and target [%v], actual is [%v]", nums, target, result)
+	}
+}

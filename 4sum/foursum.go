@@ -11,7 +11,9 @@ func findUniqueTargetPairsForSortedNums(nums []int, startIndex, target int) [][]
 		} else if pairSum < target {
 			leftIndex += 1
 		} else {
-			result = append(result, []int{nums[leftIndex], nums[rightIndex]})
+			if (startIndex == leftIndex || nums[leftIndex] != nums[leftIndex-1]) && (rightIndex == (len(nums)-1) || nums[rightIndex] != nums[rightIndex+1]) {
+				result = append(result, []int{nums[leftIndex], nums[rightIndex]})
+			}
 			leftIndex += 1
 			rightIndex -= 1
 		}
@@ -20,14 +22,14 @@ func findUniqueTargetPairsForSortedNums(nums []int, startIndex, target int) [][]
 }
 
 func findUniqueTargetSumGroupsForSortedNumsBySize(nums []int, size, startIndex, target int) [][]int {
-	if (len(nums) < size) || (target < (nums[0] * size)) || ((nums[len(nums)-1] * size) < target) {
-		return nil
+	var result [][]int
+	if (len(nums) < size) || (target < (nums[startIndex] * size)) || ((nums[len(nums)-1] * size) < target) {
+		return result
 	}
-	if 2 == target {
+	if 2 == size {
 		return findUniqueTargetPairsForSortedNums(nums, startIndex, target)
 	}
-	var result [][]int
-	for index := startIndex; index != len(nums); index += 1 {
+	for index := startIndex; index != len(nums)-1; index += 1 {
 		if index == startIndex || nums[index] != nums[index-1] {
 			for _, subGroup := range findUniqueTargetSumGroupsForSortedNumsBySize(nums, size-1, index+1, target-nums[index]) {
 				result = append(result, append(subGroup, nums[index]))
