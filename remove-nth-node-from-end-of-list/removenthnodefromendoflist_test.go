@@ -42,7 +42,15 @@ func TestTransformsToNilForSingletonListAnd1thNode(t *testing.T) {
 func TestRemovesLastNodeForTwoNodes(t *testing.T) {
 	head, n := makeListNodeFromNums([]int{0, 1}), 1
 	result := removeNthFromEnd(head, n)
-	if nil == result || 0 != result.Val {
+	if nil == result || nil != result.Next {
 		t.Errorf("Result must have head node only for list [%v] and nth node [%v], actual is [%v]", head, n, result)
+	}
+}
+
+func TestRemovesLastNodeForThreeNodes(t *testing.T) {
+	head, n := makeListNodeFromNums([]int{0, 1, 2}), 1
+	result := removeNthFromEnd(head, n)
+	if nil == result || nil == result.Next || nil != result.Next.Next {
+		t.Errorf("Result must have two nodes only for list [%v] and nth node [%v], actual is [%v]", head, n, result)
 	}
 }
