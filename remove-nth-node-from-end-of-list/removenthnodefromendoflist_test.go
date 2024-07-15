@@ -16,6 +16,15 @@ func makeListNodeFromNums(nums []int) *ListNode {
 	return head
 }
 
+func makeNumsFromListNode(head *ListNode) []int {
+	var result []int
+	for nil != head {
+		result = append(result, head.Val)
+		head = head.Next
+	}
+	return result
+}
+
 func TestTransformsNilNodeListToNil(t *testing.T) {
 	result := removeNthFromEnd(nil, 0)
 	if nil != result {
@@ -48,9 +57,10 @@ func TestRemovesLastNodeForTwoNodes(t *testing.T) {
 }
 
 func TestRemovesLastNodeForThreeNodes(t *testing.T) {
-	head, n := makeListNodeFromNums([]int{0, 1, 2}), 1
+	nums := []int{0, 1, 2}
+	head, n := makeListNodeFromNums(nums), 1
 	result := removeNthFromEnd(head, n)
-	if nil == result || nil == result.Next || nil != result.Next.Next {
-		t.Errorf("Result must have two nodes only for list [%v] and nth node [%v], actual is [%v]", head, n, result)
+	if expected, resultNums := [2]int{0, 1}, makeNumsFromListNode(result); 2 != len(resultNums) || expected != [2]int(resultNums) {
+		t.Errorf("Result must nums [%v] for list [%v] and nth node [%v], actual is [%v]", expected, nums, n, resultNums)
 	}
 }
