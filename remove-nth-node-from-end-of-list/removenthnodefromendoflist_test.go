@@ -64,3 +64,20 @@ func TestRemovesLastNodeForThreeNodes(t *testing.T) {
 		t.Errorf("Result must nums [%v] for list [%v] and nth node [%v], actual is [%v]", expected, nums, n, resultNums)
 	}
 }
+
+func TestRemovesPreEndsNodeFromList(t *testing.T) {
+	nums := []int{0, 1, 2, 3}
+	head, n := makeListNodeFromNums(nums), 2
+	result := removeNthFromEnd(head, n)
+	if expected, resultNums := [3]int{0, 1, 3}, makeNumsFromListNode(result); 3 != len(resultNums) || expected != [3]int(resultNums) {
+		t.Errorf("Result must be [%v] for list nums [%v] and nth node [%v], actual is [%v]", expected, nums, n, resultNums)
+	}
+}
+
+func TestRemovesFirstNodeFromTwoNodesList(t *testing.T) {
+	head, n := &ListNode{1, &ListNode{2, nil}}, 2
+	result := removeNthFromEnd(head, n)
+	if expected := (&ListNode{2, nil}); nil == result || expected.Val != result.Val || expected.Next != result.Next {
+		t.Errorf("Result must be [%v] for node list [%v] and nth node [%v], actual is [%v]", expected, head, n, result)
+	}
+}
