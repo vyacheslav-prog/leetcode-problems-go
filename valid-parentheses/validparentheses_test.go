@@ -48,3 +48,19 @@ func TestRejectsCloseToOpenSameBrackets(t *testing.T) {
 		t.Errorf("Result must be [false] for close-to-open same brackets into string [%v], actual is [%v]", s, result)
 	}
 }
+
+func TestRejectsInsideOpenedBracketInOther(t *testing.T) {
+	s := "([)]"
+	result := isValid(s)
+	if false != result {
+		t.Errorf("Result must be [false] for inside opens brackets into string [%v], actual is [%v]", s, result)
+	}
+}
+
+func TestPassesNestedBalancedBrackets(t *testing.T) {
+	s := "{[]}"
+	result := isValid(s)
+	if true != result {
+		t.Errorf("Result must be [true] for nested brackets into string [%v], actual is [%v]", s, result)
+	}
+}

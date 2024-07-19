@@ -10,12 +10,13 @@ var bracketToDealMap = map[byte]int{
 }
 
 func isValid(s string) bool {
-	var balance int
+	var balance, prevDeal int
 	for index := 0; len(s) != index; index += 1 {
 		deal := bracketToDealMap[s[index]]
-		if 0 == balance || 0 == balance+deal {
+		if 0 <= deal+prevDeal {
 			balance += deal
 		}
+		prevDeal = deal
 	}
 	return 0 == balance
 }
