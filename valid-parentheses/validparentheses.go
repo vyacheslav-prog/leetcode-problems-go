@@ -1,22 +1,22 @@
 package validparentheses
 
-var bracketToDealMap = map[byte]int{
-	'(': 1,
-	')': -1,
-	'[': 2,
-	']': -2,
-	'{': 3,
-	'}': -3,
+var openToCloseBracket = map[byte]byte{
+	'(': ')',
+	'[': ']',
+	'{': '}',
 }
 
 func isValid(s string) bool {
-	var balance, prevDeal int
-	for index := 0; len(s) != index; index += 1 {
-		deal := bracketToDealMap[s[index]]
-		if 0 <= deal+prevDeal {
-			balance += deal
+	var closeStack []byte
+	for index := 0; index != len(s); index += 1 {
+		closeBracket, isOpen := openToCloseBracket[s[index]]
+		if isOpen {
+			closeStack = append(closeStack, closeBracket)
+		} else if 0 != len(closeStack) && s[index] == closeStack[len(closeStack)-1] {
+			closeStack = closeStack[:len(closeStack)-1]
+		} else {
+			closeStack = append(closeStack, closeBracket)
 		}
-		prevDeal = deal
 	}
-	return 0 == balance
+	return 0 == len(closeStack)
 }

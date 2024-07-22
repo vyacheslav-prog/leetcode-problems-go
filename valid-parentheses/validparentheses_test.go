@@ -64,3 +64,11 @@ func TestPassesNestedBalancedBrackets(t *testing.T) {
 		t.Errorf("Result must be [true] for nested brackets into string [%v], actual is [%v]", s, result)
 	}
 }
+
+func TestRejectsForSingleClosingBracket(t *testing.T) {
+	s := "]"
+	result := isValid(s)
+	if false != result {
+		t.Errorf("Result must be [false] for single closing bracket into string [%v], actual is [%v]", s, result)
+	}
+}
