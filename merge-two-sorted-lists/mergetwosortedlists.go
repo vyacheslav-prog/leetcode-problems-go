@@ -6,8 +6,10 @@ type ListNode struct {
 }
 
 func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
-	if nil != list2 {
-		return list2
+	var mergedList *ListNode = list2
+	if nil != list1 {
+		mergedList = list1
+		mergedList.Next = list2
 	}
-	return list1
+	return mergedList
 }

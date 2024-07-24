@@ -32,3 +32,11 @@ func TestMergesTwoSingleValLists(t *testing.T) {
 		t.Errorf("Result must be [%v] for first [%v] and second [%v], actual is [%v]", expected, first, second, result)
 	}
 }
+
+func TestMergesTwoSingleValListsWhenGreaterValIntoFirstList(t *testing.T) {
+	first, second := &ListNode{1, nil}, &ListNode{0, nil}
+	result := mergeTwoLists(first, second)
+	if expectedHeadVal := 0; nil == result || expectedHeadVal != result.Val {
+		t.Errorf("Result must have first val [%v] for lists [%v] and [%v], actual list is [%v]", expectedHeadVal, first, second, result)
+	}
+}
