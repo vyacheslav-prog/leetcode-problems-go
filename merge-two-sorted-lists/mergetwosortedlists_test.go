@@ -65,10 +65,10 @@ func TestMergesTwoSingleValListsWhenGreaterValIntoFirstList(t *testing.T) {
 }
 
 func TestMergesTwoUnorderedForOtherList(t *testing.T) {
-	firstVals, secondVals := []int{1, 3}, []int{0, 4}
+	firstVals, secondVals := []int{1, 3, 5}, []int{0, 4}
 	first, second := makeListNodeFromNums(firstVals), makeListNodeFromNums(secondVals)
 	result := mergeTwoLists(first, second)
-	if expectedVals, resultVals := [4]int{0, 1, 3, 4}, makeNumsFromListNode(result); 4 != len(resultVals) || expectedVals != [4]int(resultVals) {
+	if expectedVals, resultVals := [5]int{0, 1, 3, 4, 5}, makeNumsFromListNode(result); 5 != len(resultVals) || expectedVals != [5]int(resultVals) {
 		t.Errorf("Result must have vals [%v] for vals [%v] and [%v], actual vals is [%v]", expectedVals, firstVals, secondVals, resultVals)
 	}
 }
