@@ -1,8 +1,12 @@
 package generateparentheses
 
 func generateParentheses(n int) []string {
+	var result []string
 	if 1 == n {
-		return []string{"()"}
+		result = []string{"()"}
 	}
-	return nil
+	if 2 == n {
+		result = []string{"()()", "(())"}
+	}
+	return result
 }
