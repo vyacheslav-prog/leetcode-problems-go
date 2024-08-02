@@ -6,9 +6,17 @@ type ListNode struct {
 }
 
 func mergeKLists(lists []*ListNode) *ListNode {
-	var mergedHead *ListNode
+	var mergedHead, mergedTail *ListNode
 	for _, head := range lists {
-		mergedHead = head
+		if nil == mergedTail {
+			mergedHead = head
+		}
+		for cursor := mergedHead; nil != cursor; cursor = cursor.Next {
+			mergedTail = cursor
+		}
+		if mergedHead != head {
+			mergedTail.Next = head
+		}
 	}
 	return mergedHead
 }
