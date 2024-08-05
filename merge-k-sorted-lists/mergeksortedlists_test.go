@@ -57,3 +57,12 @@ func TestMergesThreeListsWithChainedTailToHead(t *testing.T) {
 		t.Errorf("Result must be nums [%v] for chained lists [%v], [%v] and [%v], actual nums is [%v]", expectedNums, firstNums, secondNums, thirdNums, resultNums)
 	}
 }
+
+func TestMergesTwoListsWhenSecondTailLessThanHeadFirstList(t *testing.T) {
+	firstNums, secondNums := []int{1, 2}, []int{-1, 0}
+	lists := []*ListNode{makeListNodeFromNums(firstNums), makeListNodeFromNums(secondNums)}
+	result := mergeKLists(lists)
+	if expectedNums, resultNums := [4]int{-1, 0, 1, 2}, makeNumsFromListNode(result); 4 != len(resultNums) || expectedNums != [4]int(resultNums) {
+		t.Errorf("Result must be nums [%v] for tail-head list nums [%v] and [%v], actual nums is [%v]", expectedNums, firstNums, secondNums, resultNums)
+	}
+}

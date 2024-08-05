@@ -14,8 +14,14 @@ func mergeKLists(lists []*ListNode) *ListNode {
 		for cursor := mergedHead; nil != cursor; cursor = cursor.Next {
 			mergedTail = cursor
 		}
-		if mergedHead != head {
+		if mergedTail.Val < head.Val {
 			mergedTail.Next = head
+		} else if mergedHead != head {
+			for cursor := head; nil != cursor; cursor = cursor.Next {
+				mergedTail = cursor
+			}
+			mergedTail.Next = mergedHead
+			mergedHead = head
 		}
 	}
 	return mergedHead
