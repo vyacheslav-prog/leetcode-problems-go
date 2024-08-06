@@ -7,22 +7,25 @@ type ListNode struct {
 
 func mergeKLists(lists []*ListNode) *ListNode {
 	var mergedHead, mergedTail *ListNode
-	for _, head := range lists {
-		if nil == mergedTail {
-			mergedHead = head
-		}
-		for cursor := mergedHead; nil != cursor; cursor = cursor.Next {
-			mergedTail = cursor
-		}
-		if mergedTail.Val < head.Val {
-			mergedTail.Next = head
-		} else if mergedHead != head {
-			for cursor := head; nil != cursor; cursor = cursor.Next {
-				mergedTail = cursor
+	var minimalHead **ListNode
+	for {
+		minimalHead = nil
+		for index := 0; index != len(lists); index += 1 {
+			if nil != lists[index] && (nil == minimalHead || lists[index].Val <= (*minimalHead).Val) {
+				minimalHead = &lists[index]
 			}
-			mergedTail.Next = mergedHead
-			mergedHead = head
 		}
+		if nil == minimalHead {
+			break
+		}
+		if nil == mergedHead {
+			mergedHead = &ListNode{(*minimalHead).Val, nil}
+			mergedTail = mergedHead
+		} else {
+			mergedTail.Next = &ListNode{(*minimalHead).Val, nil}
+			mergedTail = mergedTail.Next
+		}
+		(*minimalHead) = (*minimalHead).Next
 	}
 	return mergedHead
 }

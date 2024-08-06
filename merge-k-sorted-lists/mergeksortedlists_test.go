@@ -66,3 +66,12 @@ func TestMergesTwoListsWhenSecondTailLessThanHeadFirstList(t *testing.T) {
 		t.Errorf("Result must be nums [%v] for tail-head list nums [%v] and [%v], actual nums is [%v]", expectedNums, firstNums, secondNums, resultNums)
 	}
 }
+
+func TestMergesThreeListTailToHead(t *testing.T) {
+	firstNums, secondNums, thirdNums := []int{2, 3}, []int{-2, -1}, []int{0, 1}
+	lists := []*ListNode{makeListNodeFromNums(firstNums), makeListNodeFromNums(secondNums), makeListNodeFromNums(thirdNums)}
+	result := mergeKLists(lists)
+	if expectedNums, resultNums := [6]int{-2, -1, 0, 1, 2, 3}, makeNumsFromListNode(result); 6 != len(resultNums) || expectedNums != [6]int(resultNums) {
+		t.Errorf("Result must be nums [%v] for tail-head list nums [%v], [%v] and [%v], actual nums is [%v]", expectedNums, firstNums, secondNums, thirdNums, resultNums)
+	}
+}
