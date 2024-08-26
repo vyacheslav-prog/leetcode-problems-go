@@ -6,5 +6,5 @@ type ListNode struct {
 }
 
 func reverseKGroup(head *ListNode, k int) *ListNode {
-	return nil
+	return head
 }
