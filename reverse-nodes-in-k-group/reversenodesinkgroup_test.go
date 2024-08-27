@@ -2,6 +2,29 @@ package reversenodesinkgroup
 
 import "testing"
 
+func makeListNodeFromNums(nums []int) *ListNode {
+	var cursor, head *ListNode
+	for index, value := range nums {
+		if 0 == index {
+			head = &ListNode{value, nil}
+			cursor = head
+		} else {
+			cursor.Next = &ListNode{value, nil}
+			cursor = cursor.Next
+		}
+	}
+	return head
+}
+
+func makeNumsFromListNode(head *ListNode) []int {
+	var result []int
+	for nil != head {
+		result = append(result, head.Val)
+		head = head.Next
+	}
+	return result
+}
+
 func TestReversesNoGroupForNilList(t *testing.T) {
 	result := reverseKGroup(nil, 0)
 	if nil != result {
@@ -18,9 +41,19 @@ func TestReversesNoGroupForSingleNode(t *testing.T) {
 }
 
 func TestReversesAllNodesForTwoNodesList(t *testing.T) {
-	head, k := &ListNode{1, &ListNode{2, nil}}, 2
+	nums := []int{1, 2}
+	head, k := makeListNodeFromNums(nums), 2
 	result := reverseKGroup(head, k)
-	if expectedHeadVal, expectedTailVal := 2, 1; nil == result || expectedHeadVal != result.Val || nil == result.Next || expectedTailVal != result.Next.Val {
-		t.Errorf("Result must have reversed Val for head [%v] and tail [%v] for list [%v] and group [%v], actual head is [%v]", expectedHeadVal, expectedTailVal, head, k, result)
+	if expectedNums, resultNums := [2]int{2, 1}, makeNumsFromListNode(result); 2 != len(resultNums) || expectedNums != [2]int(resultNums) {
+		t.Errorf("Result must be nums [%v] for origin nums [%v], actual is [%v]", expectedNums, nums, resultNums)
+	}
+}
+
+func TestReversesAllNodesForFourNodesList(t *testing.T) {
+	nums := []int{1, 2, 3, 4}
+	head, k := makeListNodeFromNums(nums), 4
+	result := reverseKGroup(head, k)
+	if expectedNums, resultNums := [4]int{4, 3, 2, 1}, makeNumsFromListNode(result); 4 != len(resultNums) || expectedNums != [4]int(resultNums) {
+		t.Errorf("Result must be nums [%v] for origin nums [%v], actual is [%v]", expectedNums, nums, resultNums)
 	}
 }
