@@ -5,18 +5,35 @@ type ListNode struct {
 	Next *ListNode
 }
 
-func reverseKGroup(head *ListNode, k int) *ListNode {
-	var buffer *ListNode
+func reverseNodesIntoGroup(head *ListNode, offset int) {
+	var swapCursor *ListNode
 	var prevVal int
-	for cursor := head; nil != cursor; cursor = cursor.Next {
-		if nil == buffer {
-			buffer = cursor
-		} else {
-			buffer.Val = cursor.Val
-			buffer.Next.Val = prevVal
-			buffer = nil
+	for 0 != offset {
+		for swapCounter := 0; offset != (swapCounter - 1); swapCounter += 1 {
+			if nil == swapCursor {
+				swapCursor = head
+			} else {
+				swapCursor.Val = swapCursor.Next.Val
+				swapCursor.Next.Val = prevVal
+				swapCursor = swapCursor.Next
+			}
+			prevVal = swapCursor.Val
 		}
-		prevVal = cursor.Val
+		swapCursor = nil
+		offset -= 1
+	}
+}
+
+func reverseKGroup(head *ListNode, k int) *ListNode {
+	var groupHead *ListNode
+	var groupCounter int
+	for cursor := head; nil != cursor; cursor = cursor.Next {
+		if 0 == groupCounter {
+			groupHead = cursor
+		} else if k == (groupCounter + 1) {
+			reverseNodesIntoGroup(groupHead, groupCounter)
+		}
+		groupCounter += 1
 	}
 	return head
 }

@@ -57,3 +57,27 @@ func TestReversesAllNodesForFourNodesList(t *testing.T) {
 		t.Errorf("Result must be nums [%v] for origin nums [%v], actual is [%v]", expectedNums, nums, resultNums)
 	}
 }
+
+func TestReversesPairNodesForFourNodesList(t *testing.T) {
+	nums, k := []int{2, 1, 3, 4}, 2
+	result := reverseKGroup(makeListNodeFromNums(nums), k)
+	if expectedNums, resultNums := [4]int{1, 2, 3, 4}, makeNumsFromListNode(result); 4 != len(resultNums) || expectedNums != [4]int(resultNums) {
+		t.Errorf("Result must be nums [%v] for paired nums [%v], actual is [%v]", expectedNums, nums, resultNums)
+	}
+}
+
+func TestReversesOnlyGroupedNodes(t *testing.T) {
+	nums, k := []int{2, 1, 4, 3, 5}, 2
+	result := reverseKGroup(makeListNodeFromNums(nums), k)
+	if expectedNums, resultNums := [5]int{1, 2, 3, 4, 5}, makeNumsFromListNode(result); 5 != len(resultNums) || expectedNums != [5]int(resultNums) {
+		t.Errorf("Result must be nums [%v] for not paired nums [%v], actual is [%v]", expectedNums, nums, resultNums)
+	}
+}
+
+func TestReversesSingletonGroupNodes(t *testing.T) {
+	nums, k := []int{1, 2}, 1
+	result := reverseKGroup(makeListNodeFromNums(nums), k)
+	if expectedNums, resultNums := [2]int{1, 2}, makeNumsFromListNode(result); 2 != len(resultNums) || expectedNums != [2]int(resultNums) {
+		t.Errorf("Result must be nums [%v] for singleton grouped nums [%v], actual is [%v]", expectedNums, nums, resultNums)
+	}
+}
