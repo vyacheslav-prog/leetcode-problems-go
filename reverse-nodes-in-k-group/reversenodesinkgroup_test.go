@@ -59,7 +59,7 @@ func TestReversesAllNodesForFourNodesList(t *testing.T) {
 }
 
 func TestReversesPairNodesForFourNodesList(t *testing.T) {
-	nums, k := []int{2, 1, 3, 4}, 2
+	nums, k := []int{2, 1, 4, 3}, 2
 	result := reverseKGroup(makeListNodeFromNums(nums), k)
 	if expectedNums, resultNums := [4]int{1, 2, 3, 4}, makeNumsFromListNode(result); 4 != len(resultNums) || expectedNums != [4]int(resultNums) {
 		t.Errorf("Result must be nums [%v] for paired nums [%v], actual is [%v]", expectedNums, nums, resultNums)

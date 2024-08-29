@@ -28,12 +28,15 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 	var groupHead *ListNode
 	var groupCounter int
 	for cursor := head; nil != cursor; cursor = cursor.Next {
-		if 0 == groupCounter {
-			groupHead = cursor
-		} else if k == (groupCounter + 1) {
+		if (k - 1) == groupCounter {
 			reverseNodesIntoGroup(groupHead, groupCounter)
+			groupCounter = 0
+		} else {
+			if 0 == groupCounter {
+				groupHead = cursor
+			}
+			groupCounter += 1
 		}
-		groupCounter += 1
 	}
 	return head
 }
