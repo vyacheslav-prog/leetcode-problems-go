@@ -33,3 +33,19 @@ func TestRemovesDuplicatesForNumsWithOnePairedNums(t *testing.T) {
 		t.Errorf("Result must be [%v], actual is [%v] with nums [%v]", expected, result, nums)
 	}
 }
+
+func TestRemovesDuplicatesForNumsWithOnePairedNumsInEnd(t *testing.T) {
+	nums := []int{3, 4, 4}
+	result := removeDuplicates(nums)
+	if expected, expectedNums := 2, [2]int{3, 4}; expected != result || expectedNums != [2]int(nums) {
+		t.Errorf("Result must be [%v], actual is [%v] with nums [%v]", expected, result, nums)
+	}
+}
+
+func TestRemovesAllDuplicatesWithUniqueEndsNum(t *testing.T) {
+	nums := []int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}
+	result := removeDuplicates(nums)
+	if expected, expectedNums := 5, [5]int{0, 1, 2, 3, 4}; expected != result || expectedNums != [5]int(nums) {
+		t.Errorf("Result must be [%v], actual is [%v] with nums [%v]", expected, result, nums)
+	}
+}
