@@ -33,3 +33,11 @@ func TestRemovesManyValForStartIntoNums(t *testing.T) {
 		t.Errorf("Result must be [%v] with nums [%v] for starts val [%v], actual is [%v] for nums [%v]", expectedVal, expectedNums, val, result, nums)
 	}
 }
+
+func TestRemovesFirstAndLastNumFromNums(t *testing.T) {
+	nums, val := []int{3, 2, 2, 3}, 3
+	result := removeElement(nums, val)
+	if expectedNums, expectedVal := [2]int{2, 2}, 2; expectedVal != result || expectedNums != [2]int(nums) {
+		t.Errorf("Result must be [%v] with nums [%v] for val [%v], actual is [%v] for nums [%v]", expectedVal, expectedNums, val, result, nums)
+	}
+}
