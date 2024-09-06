@@ -32,3 +32,19 @@ func TestFindsLastCharIndexWhenNeedleIsLastChar(t *testing.T) {
 		t.Errorf("Result must be [%v] for last char needle [%v] into haystack [%v], actual is [%v]", expected, needle, haystack, result)
 	}
 }
+
+func TestFindsNoIndexForNotPresenceSingletonCharNeedleIntoHaystack(t *testing.T) {
+	haystack, needle := "dog", "z"
+	result := strStr(haystack, needle)
+	if -1 != result {
+		t.Errorf("Result must be -1 for not presence needle [%v] into haystack [%v], actual is [%v]", needle, haystack, result)
+	}
+}
+
+func TestFindsForSingletonCharNeedleIntoHaystackWhenPlaceIsMiddle(t *testing.T) {
+	haystack, needle := "fox", "o"
+	result := strStr(haystack, needle)
+	if expected := 1; expected != result {
+		t.Errorf("Result must be [%v] for needle [%v] into haystack [%v], actual is [%v]", expected, needle, haystack, result)
+	}
+}
