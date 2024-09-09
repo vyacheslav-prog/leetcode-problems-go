@@ -3,15 +3,18 @@ package findtheindexofthefirstoccurrenceinastring
 func strStr(haystack string, needle string) int {
 	var matches []int
 	for index := 0; len(haystack) != index; index += 1 {
-		matches = append(matches, len(needle)-1)
+		matches = append(matches, -1)
 	}
-	for _, needleChar := range needle {
+	for needleIndex, needleChar := range needle {
+		needleOffsetOfMatch := len(haystack) * (needleIndex + 1)
 		for haystackIndex, haystackChar := range haystack {
-			if needleChar == haystackChar {
-				matches = append(matches, haystackIndex)
-			} else {
-				matches = append(matches, -1)
+			currentMatch := -1
+			if prevMatch := matches[needleOffsetOfMatch+haystackIndex-1]; -1 != prevMatch {
+				currentMatch = prevMatch
+			} else if needleChar == haystackChar {
+				currentMatch = haystackIndex
 			}
+			matches = append(matches, currentMatch)
 		}
 	}
 	if nil == matches {

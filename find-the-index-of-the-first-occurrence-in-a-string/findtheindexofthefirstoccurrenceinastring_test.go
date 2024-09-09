@@ -48,3 +48,35 @@ func TestFindsForSingletonCharNeedleIntoHaystackWhenPlaceIsMiddle(t *testing.T) 
 		t.Errorf("Result must be [%v] for needle [%v] into haystack [%v], actual is [%v]", expected, needle, haystack, result)
 	}
 }
+
+func TestFindsZeroIndexForHaystackEqualsNeedleWhenLengthIsTwo(t *testing.T) {
+	haystack, needle := "is", "is"
+	result := strStr(haystack, needle)
+	if expected := 0; expected != result {
+		t.Errorf("Result must be [%v] for equals needle [%v] and haystack [%v], actual is [%v]", expected, needle, haystack, result)
+	}
+}
+
+func TestFindsFirstIndexSingletonNeedleForManyCharHaystack(t *testing.T) {
+	haystack, needle := "cock", "c"
+	result := strStr(haystack, needle)
+	if expected := 0; expected != result {
+		t.Errorf("Result must be [%v] for many times needle [%v] into haystack [%v], actual is [%v]", expected, needle, haystack, result)
+	}
+}
+
+func TestFindsFirstIndexTwoCharNeedleForManyTimesIntoHaystack(t *testing.T) {
+	haystack, needle := "indexing", "in"
+	result := strStr(haystack, needle)
+	if expected := 0; expected != result {
+		t.Errorf("Result must be [%v] for many times needle [%v] into haystack [%v], actual is [%v]", expected, needle, haystack, result)
+	}
+}
+
+func TestFindsNoIndexForManyCharNeedleWhenNotContainedIntoHaystack(t *testing.T) {
+	haystack, needle := "dock", "dog"
+	result := strStr(haystack, needle)
+	if -1 != result {
+		t.Errorf("Result must be -1 for many char needle [%v] not into in haystack [%v], actual is [%v]", needle, haystack, result)
+	}
+}
