@@ -80,3 +80,11 @@ func TestFindsNoIndexForManyCharNeedleWhenNotContainedIntoHaystack(t *testing.T)
 		t.Errorf("Result must be -1 for many char needle [%v] not into in haystack [%v], actual is [%v]", needle, haystack, result)
 	}
 }
+
+func TestFindsFirstIndexForSecondStartNeedleIntoHaystack(t *testing.T) {
+	haystack, needle := "dadata", "data"
+	result := strStr(haystack, needle)
+	if expected := 2; expected != result {
+		t.Errorf("Result must be [%v] for second started needle [%v] into haystack [%v], actual is [%v]", expected, needle, haystack, result)
+	}
+}

@@ -10,7 +10,9 @@ func strStr(haystack string, needle string) int {
 		for haystackIndex, haystackChar := range haystack {
 			currentMatch := -1
 			if prevMatch := matches[needleOffsetOfMatch+haystackIndex-1]; -1 != prevMatch {
-				currentMatch = prevMatch
+				if needleIndex != haystackIndex || needleChar == haystackChar {
+					currentMatch = prevMatch
+				}
 			} else if needleChar == haystackChar {
 				currentMatch = haystackIndex
 			}
