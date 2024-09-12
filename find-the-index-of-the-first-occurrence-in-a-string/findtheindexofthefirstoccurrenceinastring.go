@@ -1,30 +1,20 @@
 package findtheindexofthefirstoccurrenceinastring
 
+const outOfBounds = -1
+
 func strStr(haystack string, needle string) int {
-	var matches []int
-	for index := 0; len(haystack) != index; index += 1 {
-		matches = append(matches, -1)
+	if 0 == len(haystack) || 0 == len(needle) || len(haystack) < len(needle) {
+		return outOfBounds
 	}
-	for needleIndex, needleChar := range needle {
-		needleOffsetOfMatch := len(haystack) * (needleIndex + 1)
-		for haystackIndex, haystackChar := range haystack {
-			currentMatch := -1
-			if prevMatch := matches[needleOffsetOfMatch+haystackIndex-1]; needleIndex == haystackIndex {
-				if needleChar != haystackChar {
-					currentMatch = -1
-				} else if -1 != prevMatch {
-					currentMatch = prevMatch
-				} else {
-					currentMatch = haystackIndex
-				}
-			} else if needleChar < haystackChar {
-				currentMatch = prevMatch
-			}
-			matches = append(matches, currentMatch)
+	firstIndex := outOfBounds
+	for haystackCounter := 0; outOfBounds == firstIndex && haystackCounter != len(haystack)-len(needle)+1; haystackCounter += 1 {
+		matchingIndex := haystackCounter
+		for len(needle) != matchingIndex-haystackCounter && haystack[matchingIndex] == needle[matchingIndex-haystackCounter] {
+			matchingIndex += 1
+		}
+		if matchingLength := matchingIndex - haystackCounter; 0 != matchingLength && len(needle) == matchingLength {
+			firstIndex = haystackCounter
 		}
 	}
-	if nil == matches {
-		return -1
-	}
-	return matches[len(matches)-1]
+	return firstIndex
 }
