@@ -1,6 +1,9 @@
 package dividetwointegers
 
-const positiveMax = 1 << 31 - 1
+const (
+	negativeMax = -(1 << 31)
+	positiveMax = 1 << 31 - 1
+)
 
 func divide(dividend int, divisor int) int {
 	var isNegativeDividend, isNegativeDivisor bool
@@ -17,7 +20,11 @@ func divide(dividend int, divisor int) int {
 		result += 1
 	}
 	if isNegativeDividend != isNegativeDivisor {
-		result = -result
+		if 0 != result >> 31 {
+			result = negativeMax
+		} else {
+			result = -result
+		}
 	}
 	if 0 < result && 0 != result >> 31 {
 		result = positiveMax
