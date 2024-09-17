@@ -1,10 +1,5 @@
 package dividetwointegers
 
-const (
-	negativeMax = -(1 << 31)
-	positiveMax = 1 << 31 - 1
-)
-
 func divide(dividend int, divisor int) int {
 	var isNegativeDividend, isNegativeDivisor bool
 	var result int
@@ -16,18 +11,21 @@ func divide(dividend int, divisor int) int {
 		divisor = -divisor
 		isNegativeDivisor = true
 	}
-	for remainder := dividend; divisor <= remainder; remainder -= divisor {
-		result += 1
+	for quotient := 31; -1 != quotient; quotient -= 1 {
+		if divisor<<quotient <= dividend {
+			dividend -= divisor << quotient
+			result += 1 << quotient
+		}
 	}
 	if isNegativeDividend != isNegativeDivisor {
-		if 0 != result >> 31 {
-			result = negativeMax
+		if 0 != result>>31 {
+			result = -(1 << 31)
 		} else {
 			result = -result
 		}
 	}
-	if 0 < result && 0 != result >> 31 {
-		result = positiveMax
+	if 0 < result && 0 != result>>31 {
+		result = 1<<31 - 1
 	}
 	return result
 }
