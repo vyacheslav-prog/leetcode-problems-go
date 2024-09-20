@@ -32,3 +32,11 @@ func TestFindsNoIndicesForEmptyWordsAndNotEmptyString(t *testing.T) {
 		t.Errorf("Result must be empty for string [%v] and empty words [%v], actual is [%v]", s, words, result)
 	}
 }
+
+func TestFindsTwoIndiciesForRepeatedWordIntoString(t *testing.T) {
+	s, words := "zz", []string{"z"}
+	result := findSubstring(s, words)
+	if expected := [2]int{0, 1}; 2 != len(result) || expected != [2]int(result) {
+		t.Errorf("Result must be [%v] for string [%v] and words [%v], actual is [%v]", expected, s, words, result)
+	}
+}
