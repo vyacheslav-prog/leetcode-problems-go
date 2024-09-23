@@ -40,3 +40,19 @@ func TestFindsTwoIndiciesForRepeatedWordIntoString(t *testing.T) {
 		t.Errorf("Result must be [%v] for string [%v] and words [%v], actual is [%v]", expected, s, words, result)
 	}
 }
+
+func TestFindsTwoIndiciesForUnorderedWordsIntoString(t *testing.T) {
+	s, words := "abcd", []string{"cd", "ab"}
+	result := findSubstring(s, words)
+	if expected := [1]int{0}; 1 != len(result) || expected != [1]int(result) {
+		t.Errorf("Result must be [%v] for string [%v] and words [%v], actual is [%v]", expected, s, words, result)
+	}
+}
+
+func TestFindsNoIndiciesForOccuredSameWordsWhenIsNotSerial(t *testing.T) {
+	s, words := "abbbca", []string{"a", "b", "c", "a"}
+	result := findSubstring(s, words)
+	if 0 != len(result) {
+		t.Errorf("Result must be empty for string [%v] is not serial in words [%v], actual is [%v]", s, words, result)
+	}
+}
