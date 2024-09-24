@@ -10,11 +10,16 @@ func findSubstring(s string, words []string) []int {
 	}
 	for sIndex := 0; len(s)-substringLength+1 != sIndex; sIndex += 1 {
 		wordsOccurences = make(map[int]bool)
-		for index := sIndex; len(words) != len(wordsOccurences) && sIndex+substringLength != index; index += wordLength {
-			for wordIndex := 0; len(words) != wordIndex; wordIndex += 1 {
-				if _, isOccured := wordsOccurences[wordIndex]; true != isOccured && s[index:index+wordLength] == words[wordIndex] {
-					wordsOccurences[wordIndex] = true
+		for searchIndex := sIndex; sIndex+substringLength != searchIndex; searchIndex += wordLength {
+			searchWord, wordIndex := s[searchIndex:searchIndex+wordLength], 0
+			for len(words) != wordIndex {
+				if _, isOccured := wordsOccurences[wordIndex]; true != isOccured && searchWord == words[wordIndex] {
+					break
 				}
+				wordIndex += 1
+			}
+			if len(words) != wordIndex {
+				wordsOccurences[wordIndex] = true
 			}
 		}
 		if 0 != len(wordsOccurences) && len(words) == len(wordsOccurences) {
