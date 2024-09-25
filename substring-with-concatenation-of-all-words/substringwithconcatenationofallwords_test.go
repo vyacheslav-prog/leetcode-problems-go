@@ -2,6 +2,22 @@ package substringwithconcatenationofallwords
 
 import "testing"
 
+func BenchmarkLongStringForManyWordsWhenSubstringIsNotPresents(b *testing.B) {
+	var s string
+	var words []string
+	for counter := 0; counter != 1000; counter += 1 {
+		s += "ab"
+		if counter % 2 == 0 {
+			words = append(words, "ab")
+		} else {
+			words = append(words, "ba")
+		}
+	}
+	for i := 0; i != b.N; i += 1 {
+		findSubstring(s, words)
+	}
+}
+
 func TestFindsNoIndiciesForEmptyString(t *testing.T) {
 	result := findSubstring("", nil)
 	if 0 != len(result) {
