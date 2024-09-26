@@ -2,6 +2,7 @@ package substringwithconcatenationofallwords
 
 func findSubstring(s string, words []string) []int {
 	var indicies []int
+	var sChunks []string
 	var substringLength, wordLength int
 	var wordsOccurences map[int]bool
 	if 0 != len(words) {
@@ -9,18 +10,22 @@ func findSubstring(s string, words []string) []int {
 		substringLength = len(words) * wordLength
 	}
 	for sIndex := 0; len(s)-substringLength+1 != sIndex; sIndex += 1 {
+		sChunks = nil
 		wordsOccurences = make(map[int]bool)
 		for searchIndex := sIndex; sIndex+substringLength != searchIndex; searchIndex += wordLength {
-			searchWord, wordIndex := s[searchIndex:searchIndex+wordLength], 0
-			for len(words) != wordIndex {
-				if _, isOccured := wordsOccurences[wordIndex]; true != isOccured && searchWord == words[wordIndex] {
-					break
+			sChunks = append(sChunks, s[searchIndex:searchIndex+wordLength])
+		}
+		for wordIndex, word := range words {
+			foundIndex := -1
+			for chunkIndex := 0; len(sChunks) != chunkIndex && -1 == foundIndex; chunkIndex += 1 {
+				if _, isOccured := wordsOccurences[wordIndex]; true != isOccured && word == sChunks[chunkIndex] {
+					foundIndex = wordIndex
 				}
-				wordIndex += 1
 			}
-			if len(words) != wordIndex {
-				wordsOccurences[wordIndex] = true
+			if -1 == foundIndex {
+				break
 			}
+			wordsOccurences[foundIndex] = true
 		}
 		if 0 != len(wordsOccurences) && len(words) == len(wordsOccurences) {
 			indicies = append(indicies, sIndex)
