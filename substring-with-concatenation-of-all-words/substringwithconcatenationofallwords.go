@@ -15,17 +15,18 @@ func findSubstring(s string, words []string) []int {
 		for searchIndex := sIndex; sIndex+substringLength != searchIndex; searchIndex += wordLength {
 			sChunks = append(sChunks, s[searchIndex:searchIndex+wordLength])
 		}
-		for wordIndex, word := range words {
-			foundIndex := -1
-			for chunkIndex := 0; len(sChunks) != chunkIndex && -1 == foundIndex; chunkIndex += 1 {
-				if _, isOccured := wordsOccurences[wordIndex]; true != isOccured && word == sChunks[chunkIndex] {
-					foundIndex = wordIndex
+		for _, word := range words {
+			chunkIndex := 0
+			for len(sChunks) != chunkIndex {
+				if _, isOccured := wordsOccurences[chunkIndex]; true != isOccured && word == sChunks[chunkIndex] {
+					break
 				}
+				chunkIndex += 1
 			}
-			if -1 == foundIndex {
+			if len(sChunks) == chunkIndex {
 				break
 			}
-			wordsOccurences[foundIndex] = true
+			wordsOccurences[chunkIndex] = true
 		}
 		if 0 != len(wordsOccurences) && len(words) == len(wordsOccurences) {
 			indicies = append(indicies, sIndex)

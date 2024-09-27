@@ -7,11 +7,23 @@ func BenchmarkLongStringForManyWordsWhenSubstringIsNotPresents(b *testing.B) {
 	var words []string
 	for counter := 0; counter != 1000; counter += 1 {
 		s += "ab"
-		if counter % 2 == 0 {
+		if counter%2 == 0 {
 			words = append(words, "ab")
 		} else {
 			words = append(words, "ba")
 		}
+	}
+	for i := 0; i != b.N; i += 1 {
+		findSubstring(s, words)
+	}
+}
+
+func BenchmarkLongSubstringWithRepeatedChar(b *testing.B) {
+	var s string
+	var words []string
+	for counter := 0; counter != 1000; counter += 1 {
+		s += "a"
+		words = append(words, "a")
 	}
 	for i := 0; i != b.N; i += 1 {
 		findSubstring(s, words)
@@ -62,6 +74,14 @@ func TestFindsTwoIndiciesForUnorderedWordsIntoString(t *testing.T) {
 	result := findSubstring(s, words)
 	if expected := [1]int{0}; 1 != len(result) || expected != [1]int(result) {
 		t.Errorf("Result must be [%v] for string [%v] and words [%v], actual is [%v]", expected, s, words, result)
+	}
+}
+
+func TestFindsNoIndiciesForEqualsLengthAndUnsuitableSingleWord(t *testing.T) {
+	s, words := "gotget", []string{"get", "get"}
+	result := findSubstring(s, words)
+	if 0 != len(result) {
+		t.Errorf("Result must be empty for string [%v] and words [%v], actual is [%v]", s, words, result)
 	}
 }
 
