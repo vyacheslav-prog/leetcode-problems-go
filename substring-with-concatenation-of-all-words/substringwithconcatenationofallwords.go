@@ -12,21 +12,21 @@ func findSubstring(s string, words []string) []int {
 	for sIndex := 0; len(s)-substringLength+1 != sIndex; sIndex += 1 {
 		sChunks = nil
 		wordsOccurences = make(map[int]bool)
-		for searchIndex := sIndex; sIndex+substringLength != searchIndex; searchIndex += wordLength {
-			sChunks = append(sChunks, s[searchIndex:searchIndex+wordLength])
+		for chunkIndex := sIndex; sIndex+substringLength != chunkIndex; chunkIndex += wordLength {
+			sChunks = append(sChunks, s[chunkIndex:chunkIndex+wordLength])
 		}
 		for _, word := range words {
-			chunkIndex := 0
-			for len(sChunks) != chunkIndex {
-				if _, isOccured := wordsOccurences[chunkIndex]; true != isOccured && word == sChunks[chunkIndex] {
+			foundIndex := 0
+			for len(sChunks) != foundIndex {
+				if _, isOccured := wordsOccurences[foundIndex]; true != isOccured && word == sChunks[foundIndex] {
 					break
 				}
-				chunkIndex += 1
+				foundIndex += 1
 			}
-			if len(sChunks) == chunkIndex {
+			if len(sChunks) == foundIndex {
 				break
 			}
-			wordsOccurences[chunkIndex] = true
+			wordsOccurences[foundIndex] = true
 		}
 		if 0 != len(wordsOccurences) && len(words) == len(wordsOccurences) {
 			indicies = append(indicies, sIndex)
