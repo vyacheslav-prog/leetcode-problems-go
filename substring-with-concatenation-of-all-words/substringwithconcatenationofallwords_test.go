@@ -92,3 +92,11 @@ func TestFindsNoIndiciesForOccuredSameWordsWhenIsNotSerial(t *testing.T) {
 		t.Errorf("Result must be empty for string [%v] is not serial in words [%v], actual is [%v]", s, words, result)
 	}
 }
+
+func TestFindsNoIndiciesForStringWhenWordIsLongerThanString(t *testing.T) {
+	s, words := "b", []string{"bbb", "bbb"}
+	result := findSubstring(s, words)
+	if 0 != len(result) {
+		t.Errorf("Result must be empty for string [%v] is not fit in words [%v], actual is [%v]", s, words, result)
+	}
+}
