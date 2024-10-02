@@ -9,7 +9,7 @@ func findSubstring(s string, words []string) []int {
 		substringLength += wordLength
 		wordsMap[word] += 1
 	}
-	for sIndex := 0; len(s)-substringLength+1 != sIndex; sIndex += 1 {
+	for sIndex := 0; sIndex <= len(s)-substringLength; sIndex += 1 {
 		foundWords, chunkIndex := make(map[string]int), sIndex
 		for ; sIndex+substringLength != chunkIndex; chunkIndex += wordLength {
 			chunk := s[chunkIndex : chunkIndex+wordLength]
