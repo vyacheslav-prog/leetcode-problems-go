@@ -27,3 +27,11 @@ func TestPermutatesForRightNumsForThreeNums(t *testing.T) {
 		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
 	}
 }
+
+func TestPermutatesForEndOfIncreasingNums(t *testing.T) {
+	nums, result := []int{3, 2, 1}, []int{3, 2, 1}
+	nextPermutation(result)
+	if expected := [3]int{1, 2, 3}; 3 != len(result) || expected != [3]int(result) {
+		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
+	}
+}
