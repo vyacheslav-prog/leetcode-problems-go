@@ -1,7 +1,15 @@
 package nextpermutation
 
 func nextPermutation(nums []int) {
-	if 1 < len(nums) {
-		nums[len(nums)-2], nums[len(nums)-1] = nums[len(nums)-1], nums[len(nums)-2]
+	var descendingNumsValue int
+	descendingNumsIndex := -1
+	for index, value := range nums {
+		if -1 == descendingNumsIndex || descendingNumsValue < value {
+			descendingNumsIndex = index
+			descendingNumsValue = value
+		}
+	}
+	if 0 < descendingNumsIndex {
+		nums[descendingNumsIndex-1], nums[descendingNumsIndex] = descendingNumsValue, nums[descendingNumsIndex-1]
 	}
 }

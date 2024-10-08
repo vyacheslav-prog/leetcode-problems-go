@@ -28,6 +28,14 @@ func TestPermutatesForRightNumsForThreeNums(t *testing.T) {
 	}
 }
 
+func TestPermutatesForPairNumsIntoMiddle(t *testing.T) {
+	nums, result := []int{1, 2, 3, 2, 1}, []int{1, 2, 3, 2, 1}
+	nextPermutation(result)
+	if expected := [5]int{1, 3, 2, 2, 1}; 5 != len(result) || expected != [5]int(result) {
+		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
+	}
+}
+
 func TestPermutatesForEndOfIncreasingNums(t *testing.T) {
 	nums, result := []int{3, 2, 1}, []int{3, 2, 1}
 	nextPermutation(result)
