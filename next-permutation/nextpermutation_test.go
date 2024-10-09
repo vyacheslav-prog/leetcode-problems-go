@@ -29,9 +29,25 @@ func TestPermutatesForRightNumsForThreeNums(t *testing.T) {
 }
 
 func TestPermutatesForPairNumsIntoMiddle(t *testing.T) {
-	nums, result := []int{1, 2, 3, 2, 1}, []int{1, 2, 3, 2, 1}
+	nums, result := []int{1, 2, 3, 2, 2}, []int{1, 2, 3, 2, 2}
 	nextPermutation(result)
-	if expected := [5]int{1, 3, 2, 2, 1}; 5 != len(result) || expected != [5]int(result) {
+	if expected := [5]int{1, 3, 2, 2, 2}; 5 != len(result) || expected != [5]int(result) {
+		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
+	}
+}
+
+func TestPermutatesWithDescendingRightTwoNums(t *testing.T) {
+	nums, result := []int{10, 13, 7}, []int{10, 13, 7}
+	nextPermutation(result)
+	if expected := [3]int{13, 7, 10}; 3 != len(result) || expected != [3]int(result) {
+		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
+	}
+}
+
+func TestPermutatesWithDescendingRightNums(t *testing.T) {
+	nums, result := []int{3, 9, 6, 3}, []int{3, 9, 6, 3}
+	nextPermutation(result)
+	if expected := [4]int{6, 3, 3, 9}; 4 != len(result) || expected != [4]int(result) {
 		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
 	}
 }
