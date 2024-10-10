@@ -10,7 +10,13 @@ func nextPermutation(nums []int) {
 		}
 	}
 	if 0 < descendingNumsIndex {
-		nums[descendingNumsIndex-1], nums[descendingNumsIndex] = descendingNumsValue, nums[descendingNumsIndex-1]
+		leaderSwapIndex := descendingNumsIndex - 1
+		for index := descendingNumsIndex + 1; len(nums) != index; index += 1 {
+			if nums[leaderSwapIndex] < nums[index] {
+				leaderSwapIndex = index
+			}
+		}
+		nums[descendingNumsIndex-1], nums[leaderSwapIndex] = nums[leaderSwapIndex], nums[descendingNumsIndex-1]
 		for index := descendingNumsIndex; index < len(nums)-1; index += 1 {
 			if nums[index+1] < nums[index] {
 				nums[index+1], nums[index] = nums[index], nums[index+1]
