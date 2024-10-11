@@ -59,3 +59,19 @@ func TestPermutatesForEndOfIncreasingNums(t *testing.T) {
 		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
 	}
 }
+
+func TestPermutatesNoForSingletonNums(t *testing.T) {
+	nums := []int{1}
+	nextPermutation(nums)
+	if 1 != len(nums) {
+		t.Errorf("Result must have single number for singleton nums [%v]", nums)
+	}
+}
+
+func TestPermutatesLeftDescendingForZeroIndexLeader(t *testing.T) {
+	nums, result := []int{3, 1, 2}, []int{3, 1, 2}
+	nextPermutation(result)
+	if expected := [3]int{3, 2, 1}; 3 != len(result) || expected != [3]int(result) {
+		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
+	}
+}
