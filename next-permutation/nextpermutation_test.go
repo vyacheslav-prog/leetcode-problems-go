@@ -75,3 +75,11 @@ func TestPermutatesLeftDescendingForZeroIndexLeader(t *testing.T) {
 		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
 	}
 }
+
+func TestPermutatesWithNotFirstDescendingAndLongOrderingTail(t *testing.T) {
+	nums, result := []int{5, 4, 7, 5, 3, 2}, []int{5, 4, 7, 5, 3, 2}
+	nextPermutation(result)
+	if expected := [6]int{5, 5, 2, 3, 4, 7}; 6 != len(result) || expected != [6]int(result) {
+		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
+	}
+}

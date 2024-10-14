@@ -1,12 +1,11 @@
 package nextpermutation
 
 func nextPermutation(nums []int) {
-	var descendingNumsValue int
 	descendingNumsIndex, leaderSwapIndex := -1, -1
-	for index, value := range nums {
-		if -1 == descendingNumsIndex || descendingNumsValue < value {
+	for descendingNumsValue, index := 0, 0; len(nums) != index; index += 1 {
+		if -1 == descendingNumsIndex || descendingNumsValue < nums[index] || nums[index-1] < nums[index] {
 			descendingNumsIndex = index
-			descendingNumsValue = value
+			descendingNumsValue = nums[index]
 		}
 	}
 	if 0 < descendingNumsIndex {
