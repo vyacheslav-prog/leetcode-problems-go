@@ -83,3 +83,11 @@ func TestPermutatesWithNotFirstDescendingAndLongOrderingTail(t *testing.T) {
 		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
 	}
 }
+
+func TestPermutatesLongDistanceForRevertNumberIntoDescendingSequence(t *testing.T) {
+	nums, result := []int{2, 2, 7, 5, 4, 3, 2, 2, 1}, []int{2, 2, 7, 5, 4, 3, 2, 2, 1}
+	nextPermutation(result)
+	if expected := [9]int{2, 3, 1, 2, 2, 2, 4, 5, 7}; 9 != len(result) || expected != [9]int(result) {
+		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
+	}
+}
