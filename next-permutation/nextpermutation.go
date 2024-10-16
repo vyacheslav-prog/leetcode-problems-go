@@ -8,14 +8,12 @@ func nextPermutation(nums []int) {
 			descendingNumsValue = nums[index]
 		}
 	}
-	if 0 < descendingNumsIndex {
-		leaderSwapIndex = descendingNumsIndex - 1
-	} else if 0 == descendingNumsIndex && 1 != len(nums) {
+	if 0 == descendingNumsIndex && 1 != len(nums) {
 		descendingNumsIndex = 1
 		leaderSwapIndex = len(nums) - 1
-	}
-	for index := descendingNumsIndex + 1; len(nums) != index; index += 1 {
-		if nums[leaderSwapIndex] < nums[index] {
+	} else if -1 != descendingNumsIndex {
+		leaderSwapIndex = descendingNumsIndex - 1
+		for index, swapIndex := descendingNumsIndex+1, leaderSwapIndex; len(nums) != index && nums[swapIndex] < nums[index]; index += 1 {
 			leaderSwapIndex = index
 		}
 	}

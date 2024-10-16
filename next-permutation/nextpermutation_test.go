@@ -91,3 +91,11 @@ func TestPermutatesLongDistanceForRevertNumberIntoDescendingSequence(t *testing.
 		t.Errorf("Result must be [%v] for nums [%v], actual is [%v]", expected, nums, result)
 	}
 }
+
+func TestPermutatesFourDecreasingNums(t *testing.T) {
+	nums, result := []int{4, 3, 2, 1}, []int{4, 3, 2, 1}
+	nextPermutation(result)
+	if expected := [4]int{1, 2, 3, 4}; 4 != len(result) || expected != [4]int(result) {
+		t.Errorf("Result must be [%v] for decreasing nums [%v], actual is [%v]", expected, nums, result)
+	}
+}
