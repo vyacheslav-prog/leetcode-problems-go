@@ -24,3 +24,11 @@ func TestFindsSubstringLengthWithoutExtraBracket(t *testing.T) {
 		t.Errorf("Result must be [%v] for string [%v], actual is [%v]", expected, s, result)
 	}
 }
+
+func TestFindsNoSubstringForNotWellFormedString(t *testing.T) {
+	s := ")("
+	result := longestValidParentheses(s)
+	if 0 != result {
+		t.Errorf("Result must be zero for not well-formed string [%v], actual is [%v]", s, result)
+	}
+}
