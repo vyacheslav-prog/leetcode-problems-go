@@ -1,16 +1,21 @@
 package longestvalidparentheses
 
+const (
+	closingBracket = ')'
+	openingBracket = '('
+)
+
 func longestValidParentheses(s string) int {
-	var closingNums, openingNums int
+	brackets := make(map[rune]int)
 	for _, value := range s {
-		if '(' == value {
-			openingNums += 1
-		} else {
-			closingNums += 1
+		if openingBracket == value {
+			brackets[value] += 1
+		} else if openingNums := brackets[openingBracket]; 0 != openingNums {
+			brackets[value] += 1
 		}
 	}
-	if openingNums < closingNums {
-		return 2 * openingNums
+	if brackets[closingBracket] < brackets[openingBracket] {
+		return 2 * brackets[closingBracket]
 	}
-	return 2 * openingNums
+	return 2 * brackets[openingBracket]
 }
