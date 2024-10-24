@@ -19,6 +19,8 @@ func longestValidParentheses(s string) int {
 			brackets = make(map[rune]int)
 		} else if closingNums == openingNums {
 			substringLength = 2 * openingNums
+		} else {
+			substringLength = 2 * closingNums
 		}
 	}
 	return substringLength
