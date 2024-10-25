@@ -6,7 +6,7 @@ const (
 )
 
 func longestValidParentheses(s string) int {
-	var substringLength int
+	var maxLength, substringLength int
 	brackets := make(map[rune]int)
 	for _, value := range s {
 		if openingBracket == value {
@@ -22,6 +22,9 @@ func longestValidParentheses(s string) int {
 		} else {
 			substringLength = 2 * closingNums
 		}
+		if maxLength < substringLength {
+			maxLength = substringLength
+		}
 	}
-	return substringLength
+	return maxLength
 }
