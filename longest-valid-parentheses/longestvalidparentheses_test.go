@@ -2,6 +2,28 @@ package longestvalidparentheses
 
 import "testing"
 
+func BenchmarkForTwentyClosingBrackets(b *testing.B) {
+	var chars [20]rune
+	for i := 0; i != len(chars); i += 1 {
+		chars[i] = closingBracket
+	}
+	s := string(chars[:])
+	for i := 0; i < b.N; i += 1 {
+		longestValidParentheses(s)
+	}
+}
+
+func BenchmarkForTwentyOpeningBrackets(b *testing.B) {
+	var chars [20]rune
+	for i := 0; i != len(chars); i += 1 {
+		chars[i] = openingBracket
+	}
+	s := string(chars[:])
+	for i := 0; i < b.N; i += 1 {
+		longestValidParentheses(s)
+	}
+}
+
 func TestFindsZeroLengthSubstringForEmptyString(t *testing.T) {
 	result := longestValidParentheses("")
 	if 0 != result {
