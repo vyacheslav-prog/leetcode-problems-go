@@ -5,10 +5,13 @@ const (
 	openingBracket = '('
 )
 
-func longestValidParentheses(s string) int {
+func findLongestValidParentheses(prevResults map[string]int, s string) int {
+	if prevResult, isFound := prevResults[s]; isFound {
+		return prevResult
+	}
 	var maxLength, substringLength int
 	brackets := make(map[rune]int)
-	for _, value := range s {
+	for index, value := range s {
 		if openingBracket == value {
 			brackets[value] += 1
 		} else if openingNums := brackets[openingBracket]; 0 != openingNums {
@@ -19,13 +22,18 @@ func longestValidParentheses(s string) int {
 			brackets = make(map[rune]int)
 		} else if closingNums == openingNums {
 			substringLength = 2 * openingNums
+		} else {
+			substringLength = findLongestValidParentheses(prevResults, s[index+1:])
 		}
 		if maxLength < substringLength {
 			maxLength = substringLength
 		}
 	}
-	if 0 == maxLength && 0 != len(brackets) {
-		maxLength = 2 * brackets[closingBracket]
-	}
+	prevResults[s] = maxLength
 	return maxLength
+}
+
+func longestValidParentheses(s string) int {
+	prevResults := make(map[string]int)
+	return findLongestValidParentheses(prevResults, s)
 }

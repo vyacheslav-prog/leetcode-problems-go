@@ -2,6 +2,21 @@ package longestvalidparentheses
 
 import "testing"
 
+func BenchmarkFindsSubstringForAnyThousandBrackets(b *testing.B) {
+	var chars [1000]rune
+	for i := 0; i != len(chars); i += 1 {
+		if i%6 < 3 || i%10/3 < 1 {
+			chars[i] = openingBracket
+		} else {
+			chars[i] = closingBracket
+		}
+	}
+	s := string(chars[:])
+	for i := 0; i < b.N; i += 1 {
+		longestValidParentheses(s)
+	}
+}
+
 func BenchmarkForTwentyClosingBrackets(b *testing.B) {
 	var chars [20]rune
 	for i := 0; i != len(chars); i += 1 {
