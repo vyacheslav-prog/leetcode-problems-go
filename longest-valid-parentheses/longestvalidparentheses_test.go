@@ -141,3 +141,11 @@ func TestFindsSubstringForWellFormedPairsAndExtraOpeningBracketIntoStart(t *test
 		t.Errorf("Result must be [%v] for string [%v], actual is [%v]", expected, s, result)
 	}
 }
+
+func TestFindsSubstringWithExtraOpeningBracketIntoStart(t *testing.T) {
+	s := "(((())())"
+	result := longestValidParentheses(s)
+	if expected := 8; expected != result {
+		t.Errorf("Result must be [%v] for string [%v], actual is [%v]", expected, s, result)
+	}
+}
