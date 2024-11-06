@@ -19,7 +19,6 @@ func longestValidParentheses(s string) int {
 				openedSubstringCounter += 1
 			} else {
 				openedSubstringCounter -= 1
-
 			}
 			if 1 < openedSubstringCounter {
 				openedSubstringCounter = 1
