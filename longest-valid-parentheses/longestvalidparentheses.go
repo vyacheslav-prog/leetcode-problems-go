@@ -37,5 +37,8 @@ func longestValidParentheses(s string) int {
 			maxLength = substringLength
 		}
 	}
+	if openedSubstringLength := len(s) - openedSubstringIndex + 1; 0 != openedSubstringIndex && 0 != openedSubstringCounter && maxLength < openedSubstringLength {
+		maxLength = openedSubstringLength
+	}
 	return maxLength
 }
