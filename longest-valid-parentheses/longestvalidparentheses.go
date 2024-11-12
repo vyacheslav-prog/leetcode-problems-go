@@ -15,12 +15,15 @@ func longestValidParentheses(s string) int {
 			brackets[value] += 1
 		}
 		if closingNums, openingNums := brackets[closingBracket], brackets[openingBracket]; closingNums < openingNums {
-			if leftSubstringIndex == rightSubstringIndex {
-				rightSubstringIndex = index
-			}
+			rightSubstringIndex = index
 			if 0 != rightSubstringIndex {
+				if closingBracket == value {
+					leftSubstringIndex -= 1
+				} else {
+					leftSubstringIndex += 1
+				}
 				if closingBracket == s[rightSubstringIndex] {
-					substringLength = rightSubstringIndex - leftSubstringIndex + 1
+					substringLength = rightSubstringIndex - leftSubstringIndex
 				}
 			}
 		} else {
