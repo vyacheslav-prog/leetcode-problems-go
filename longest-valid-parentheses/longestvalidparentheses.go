@@ -19,16 +19,14 @@ func longestValidParentheses(s string) int {
 			if accOpeningNums != accClosingNums {
 				accClosingNums, accOpeningNums = 0, 0
 			}
-		} else {
-			if leftUnclosedIndex != index {
-				if closingBracket == value {
-					leftUnclosedIndex -= 1
-				} else {
-					leftUnclosedIndex += 1
-				}
-				if closingBracket == value {
-					substringLength = index - leftUnclosedIndex
-				}
+		} else if 0 != index {
+			if closingBracket == value {
+				substringLength = index - leftUnclosedIndex + 1
+				leftUnclosedIndex -= 1
+			} else if openingBracket == s[index-1] {
+				leftUnclosedIndex = index
+			} else {
+				leftUnclosedIndex += 1
 			}
 		}
 		if maxLength < substringLength {

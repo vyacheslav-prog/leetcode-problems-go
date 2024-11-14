@@ -157,3 +157,11 @@ func TestFindsFirstNestedSubstringWithExtraOpeningBracketIsLast(t *testing.T) {
 		t.Errorf("Result must be [%v] for string [%v], actual is [%v]", expected, s, result)
 	}
 }
+
+func TestFindsSingletonLongestSubstringWithNotFirstExtraOpeningBracket(t *testing.T) {
+	s := ")(((((()())()()))()(()))("
+	result := longestValidParentheses(s)
+	if expected := 22; expected != result {
+		t.Errorf("Result must be [%v] for string [%v], actual is [%v]", expected, s, result)
+	}
+}
