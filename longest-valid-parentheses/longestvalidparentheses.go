@@ -6,34 +6,34 @@ const (
 )
 
 func longestValidParentheses(s string) int {
-	var accClosingNums, accOpeningNums, leftOpeningNums, leftUnclosedIndex, maxLength, substringLength int
-	for index, value := range s {
-		if openingBracket == value {
-			accOpeningNums += 1
-		} else if 0 != accOpeningNums {
-			accClosingNums += 1
+	var closingCounter, maxLength, openingCounter int
+	for i := 0; i < len(s); i += 1 {
+		if openingBracket == s[i] {
+			openingCounter += 1
+		} else {
+			closingCounter += 1
 		}
-		if accOpeningNums <= accClosingNums {
-			leftOpeningNums, leftUnclosedIndex = 0, index
-			substringLength = 2 * accOpeningNums
-			if accOpeningNums != accClosingNums {
-				accClosingNums, accOpeningNums = 0, 0
+		if openingCounter == closingCounter {
+			if currentLength := 2 * closingCounter; maxLength < currentLength {
+				maxLength = currentLength
 			}
-		} else if 0 != index {
-			if closingBracket == value {
-				substringLength = index - leftUnclosedIndex + 1
-				leftUnclosedIndex -= leftOpeningNums
-				leftOpeningNums -= 1
-			} else {
-				leftUnclosedIndex += 1
-				if openingBracket == s[index-1] {
-					leftOpeningNums += 1
-					leftUnclosedIndex = index
-				}
-			}
+		} else if openingCounter < closingCounter {
+			openingCounter, closingCounter = 0, 0
 		}
-		if maxLength < substringLength {
-			maxLength = substringLength
+	}
+	openingCounter, closingCounter = 0, 0
+	for i := len(s) - 1; 0 <= i; i -= 1 {
+		if openingBracket == s[i] {
+			openingCounter += 1
+		} else {
+			closingCounter += 1
+		}
+		if openingCounter == closingCounter {
+			if currentLength := 2 * openingCounter; maxLength < currentLength {
+				maxLength = currentLength
+			}
+		} else if closingCounter < openingCounter {
+			openingCounter, closingCounter = 0, 0
 		}
 	}
 	return maxLength
