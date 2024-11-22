@@ -1,5 +1,8 @@
 package searchinrotatedsortedarray
 
 func search(nums []int, target int) int {
-	return 0
+	if nil != nums {
+		return 0
+	}
+	return -1
 }
