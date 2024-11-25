@@ -24,3 +24,11 @@ func TestSearchesNoIndexWhenTargetIsNotPresented(t *testing.T) {
 		t.Errorf("Result must be -1 for not empty nums [%v] and not presented target [%v], actual is [%v]", nums, target, result)
 	}
 }
+
+func TestSearchesIndexForLastItemIsTarget(t *testing.T) {
+	nums, target := []int{2, 3}, 3
+	result := search(nums, target)
+	if expected := 1; expected != result {
+		t.Errorf("Result must be [%v] for two items [%v] and target [%v], actual is [%v]", expected, nums, target, result)
+	}
+}
