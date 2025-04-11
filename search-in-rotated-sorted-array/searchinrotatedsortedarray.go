@@ -7,10 +7,11 @@ func search(nums []int, target int) int {
 		return noIndex
 	}
 	middleIndex := len(nums) / 2
-	if target < nums[middleIndex] {
-		return search(nums[0:middleIndex], target)
-	} else if target == nums[middleIndex] {
+	if target == nums[middleIndex] {
 		return middleIndex
 	}
-	return search(nums[middleIndex:len(nums)-1], target)
+	if nums[middleIndex] < target && nums[0] < nums[len(nums)-1] {
+		return search(nums[middleIndex:len(nums)-1], target)
+	}
+	return search(nums[0:middleIndex], target)
 }
