@@ -48,3 +48,27 @@ func TestSearchesIndexForLastTargetElementWhenThreeElementsNumsIsRotated(t *test
 		t.Errorf("Result must be [%v] for rotated nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
 	}
 }
+
+func TestSearchesIndexForTwoStepSearchingForNotRotatedNums(t *testing.T) {
+	nums, target := []int{-5, -3, -1, 1, 3, 5}, 3
+	result := search(nums, target)
+	if expected := 4; expected != result {
+		t.Errorf("Result must be [%v] for nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
+	}
+}
+
+func TestSearchesIndexForTwoStepSearchingForRotatedNums(t *testing.T) {
+	nums, target := []int{-3, -1, 1, 3, 5, -5}, 3
+	result := search(nums, target)
+	if expected := 3; expected != result {
+		t.Errorf("Result must be [%v] for nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
+	}
+}
+
+func TestSearchesForTwoNumsWithoutTarget(t *testing.T) {
+	nums, target := []int{1, 3}, 4
+	result := search(nums, target)
+	if noIndex != result {
+		t.Errorf("Result must be -1 for nums [%v] and not presented target [%v], actual is [%v]", nums, target, result)
+	}
+}
