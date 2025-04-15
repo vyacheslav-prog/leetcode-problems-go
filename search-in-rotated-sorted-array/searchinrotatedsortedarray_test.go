@@ -72,3 +72,11 @@ func TestSearchesForTwoNumsWithoutTarget(t *testing.T) {
 		t.Errorf("Result must be -1 for nums [%v] and not presented target [%v], actual is [%v]", nums, target, result)
 	}
 }
+
+func TestSearchesIndexForThreeStepSearchingForRotatedNums(t *testing.T) {
+	nums, target := []int{4, 5, 6, 7, 0, 1, 2}, 1
+	result := search(nums, target)
+	if expected := 5; expected != result {
+		t.Errorf("Result must be [%v] for nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
+	}
+}
