@@ -1,5 +1,7 @@
 package searchinrotatedsortedarray
 
+import "fmt"
+
 const noIndex = -1
 
 func search(nums []int, target int) int {
@@ -13,12 +15,14 @@ func search(nums []int, target int) int {
 	if target == nums[middleIndex] {
 		return middleIndex
 	}
-	if isRotated := nums[0] < nums[len(nums)-1]; nums[middleIndex] < target && isRotated {
+	if isRotated := nums[len(nums)-1] < nums[0]; isRotated || nums[middleIndex] < target {
+		fmt.Printf("right [%v] for nums [%v] and target [%v]\n", nums[middleIndex:len(nums)-1], nums, target)
 		nestedResult := search(nums[middleIndex:len(nums)-1], target)
 		if noIndex == nestedResult {
 			return noIndex
 		}
 		return middleIndex + nestedResult
 	}
-	return search(nums[0:middleIndex], target)
+	fmt.Printf("left [%v] for nums [%v] and target [%v]\n", nums[:middleIndex], nums, target)
+	return search(nums[:middleIndex], target)
 }
