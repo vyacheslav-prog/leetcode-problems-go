@@ -80,3 +80,11 @@ func TestSearchesIndexForThreeStepSearchingForRotatedNums(t *testing.T) {
 		t.Errorf("Result must be [%v] for nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
 	}
 }
+
+func TestSearchedIndexForMiddleNumForRotatedNums(t *testing.T) {
+	nums, target := []int{5, 1, 3}, 1
+	result := search(nums, target)
+	if expected := 1; expected != result {
+		t.Errorf("Result must be [%v] for nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
+	}
+}
