@@ -12,12 +12,15 @@ func search(nums []int, target int) int {
 	if 0 == len(nums)%2 {
 		middleIndex -= 1
 	}
-	currentNum, lastNum := nums[middleIndex], nums[len(nums)-1]
-	if target == currentNum {
+	current, first, last := nums[middleIndex], nums[0], nums[len(nums)-1]
+	if target == current {
 		return middleIndex
 	}
-	log.Printf("For nums [%v] and target [%v], current num is [%v]", nums, target, currentNum)
-	if isRotated := lastNum < nums[0]; (isRotated != true && currentNum < target) || (isRotated && ((lastNum < currentNum && target < nums[0]) || (currentNum < target))) {
+	if target == last {
+		return len(nums) - 1
+	}
+	log.Printf("For nums [%v] and target [%v], current num is [%v]", nums, target, current)
+	if (first < last && current < target) || (last < current && (target < first || current < target)) {
 		leftIndex := middleIndex
 		if 0 == (leftIndex+len(nums))%2 {
 			leftIndex += 1
