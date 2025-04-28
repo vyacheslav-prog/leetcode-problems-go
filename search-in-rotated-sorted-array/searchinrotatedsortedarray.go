@@ -1,7 +1,5 @@
 package searchinrotatedsortedarray
 
-import "log"
-
 const noIndex = -1
 
 func search(nums []int, target int) int {
@@ -13,18 +11,17 @@ func search(nums []int, target int) int {
 	switch target {
 	case current:
 		return currentIndex
+	case first:
+		return 0
 	case last:
 		return lastIndex
 	}
-	log.Printf("For nums [%v] and target [%v], current [%v] first [%v] last [%v]", nums, target, current, first, last)
-	if (first < last && current < target) || (last < current && (target < first || current < target)) {
-		log.Printf("Right [%v]", nums[currentIndex:len(nums)])
+	if (first < last && current < target) || (last < current && (target < first || current < target)) || (current < first && current < target && target < last) {
 		nextResult := search(nums[currentIndex:len(nums)], target)
 		if noIndex == nextResult {
 			return noIndex
 		}
 		return currentIndex + nextResult
 	}
-	log.Printf("Left [%v]", nums[:currentIndex])
 	return search(nums[:currentIndex], target)
 }

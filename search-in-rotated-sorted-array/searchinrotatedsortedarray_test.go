@@ -144,3 +144,19 @@ func TestSearchesIndexForRotatedNumsForPreLastNum(t *testing.T) {
 		t.Errorf("Result must be [%v] for rotated nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
 	}
 }
+
+func TestSearchesIndexForLastNumRotatedPositiveNums(t *testing.T) {
+	nums, target := []int{2, 3, 4, 5, 6, 7, 8, 9, 1}, 9
+	result := search(nums, target)
+	if expected := 7; expected != result {
+		t.Errorf("Result must be [%v] for rotated nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
+	}
+}
+
+func TestSearchesIndexForRightToMiddleNumWhenNumsIsRotated(t *testing.T) {
+	nums, target := []int{8, 9, 2, 3, 4}, 9
+	result := search(nums, target)
+	if expected := 1; expected != result {
+		t.Errorf("Result must be [%v] for rotated nums [%v] and target [%v], actual is [%v]", expected, nums, target, result)
+	}
+}
